@@ -3,6 +3,7 @@
 import * as React from 'react'
 import { Check, ChevronDown, Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useNonPassiveWheelScroll } from '@/lib/use-non-passive-wheel-scroll'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 interface SearchableSelectOption {
@@ -35,6 +36,7 @@ const SearchableSelect = ({
 }: SearchableSelectProps) => {
     const [open, setOpen] = React.useState(false)
     const [busca, setBusca] = React.useState('')
+    const listRef = useNonPassiveWheelScroll<HTMLDivElement>()
 
     const selecionado = options.find((option) => option.value === value)
 
@@ -85,7 +87,7 @@ const SearchableSelect = ({
                         className="h-10 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
                     />
                 </div>
-                <div className="max-h-64 overflow-y-auto p-1">
+                <div ref={listRef} className="max-h-64 overflow-y-auto p-1">
                     {opcoesFiltradas.length === 0 && (
                         <p className="px-2 py-3 text-center text-sm text-muted-foreground">{emptyMessage}</p>
                     )}

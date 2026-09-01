@@ -7,6 +7,7 @@ model Ocorrencia {
     dataOcorrencia          DateTime
     situacaoAtual           SituacaoOcorrencia
     faixaValor              FaixaValorOcorrencia
+    gravidade               GravidadeOcorrencia  @default(MEDIA)
     imobiliariaId           Int
     usuarioId               Int
     status                  StatusOcorrencia     @default(ATIVA)

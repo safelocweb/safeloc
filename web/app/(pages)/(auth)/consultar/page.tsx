@@ -18,6 +18,7 @@ import {
 } from '@/shared/constants/tipo-ocorrencia'
 import { SITUACAO_OCORRENCIA_LABEL } from '@/shared/constants/situacao-ocorrencia'
 import { FAIXA_VALOR_OCORRENCIA_LABEL } from '@/shared/constants/faixa-valor-ocorrencia'
+import { GRAVIDADE_OCORRENCIA_BADGE_CLASS, GRAVIDADE_OCORRENCIA_LABEL } from '@/shared/constants/gravidade-ocorrencia'
 
 export default function ConsultarPage() {
     const [resultado, setResultado] = useState<ConsultaResult | null>(null)
@@ -132,6 +133,9 @@ export default function ConsultarPage() {
                                                         </div>
                                                         <div className="pl-11">
                                                             <div className="mt-2 flex flex-wrap gap-1.5">
+                                                                <Badge className={GRAVIDADE_OCORRENCIA_BADGE_CLASS[ocorrencia.gravidade]}>
+                                                                    {GRAVIDADE_OCORRENCIA_LABEL[ocorrencia.gravidade]}
+                                                                </Badge>
                                                                 <Badge variant="outline">
                                                                     {SITUACAO_OCORRENCIA_LABEL[ocorrencia.situacaoAtual]}
                                                                 </Badge>

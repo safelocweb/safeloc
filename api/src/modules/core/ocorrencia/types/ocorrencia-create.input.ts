@@ -1,5 +1,5 @@
 import { IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator'
-import { FaixaValorOcorrencia, SituacaoOcorrencia, TipoOcorrencia } from '@prisma/client'
+import { FaixaValorOcorrencia, GravidadeOcorrencia, SituacaoOcorrencia, TipoOcorrencia } from '@prisma/client'
 
 export class OcorrenciaCreateInput {
     @IsString()
@@ -24,4 +24,7 @@ export class OcorrenciaCreateInput {
 
     @IsEnum(FaixaValorOcorrencia, { message: 'Faixa de valor inválida' })
     faixaValor: FaixaValorOcorrencia
+
+    @IsEnum(GravidadeOcorrencia, { message: 'Gravidade inválida' })
+    gravidade: GravidadeOcorrencia
 }

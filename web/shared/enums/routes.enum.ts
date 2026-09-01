@@ -1,5 +1,6 @@
 export enum ROUTES {
     LOGIN = '/login',
+    DASHBOARD = '/dashboard',
     CONSULTAR = '/consultar',
     INSERIR = '/inserir',
     EXCLUIR = '/excluir',

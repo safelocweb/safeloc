@@ -1,7 +1,8 @@
 export const FAIXA_VALOR_OCORRENCIA_OPTIONS = [
-    { value: 'ATE_5_MIL', label: 'Até R$ 5.000' },
-    { value: 'DE_5_MIL_A_20_MIL', label: 'De R$ 5.001 a R$ 20.000' },
-    { value: 'ACIMA_20_MIL', label: 'Acima de R$ 20.000' }
+    { value: 'ATE_1_MIL', label: 'Até R$ 1.000' },
+    { value: 'DE_1_MIL_A_2_MIL', label: 'R$ 1.000 até R$ 2.000' },
+    { value: 'DE_2_MIL_A_5_MIL', label: 'R$ 2.000 até R$ 5.000' },
+    { value: 'ACIMA_10_MIL', label: 'Acima de R$ 10.000' }
 ] as const
 
 export type FaixaValorOcorrencia = (typeof FAIXA_VALOR_OCORRENCIA_OPTIONS)[number]['value']

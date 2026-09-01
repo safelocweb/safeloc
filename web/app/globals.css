@@ -24,6 +24,12 @@
         --input: 200 20% 88%;
         --ring: 175 75% 37%;
         --radius: 0.5rem;
+        --chart-blue: #2a78d6;
+        --chart-good: #0ca30c;
+        --chart-warning: #fab219;
+        --chart-critical: #d03b3b;
+        --chart-grid: #e1e0d9;
+        --chart-muted: #898781;
     }
     .dark {
         --background: 200 40% 8%;
@@ -45,6 +51,12 @@
         --border: 200 25% 20%;
         --input: 200 25% 20%;
         --ring: 175 65% 45%;
+        --chart-blue: #3987e5;
+        --chart-good: #0ca30c;
+        --chart-warning: #fab219;
+        --chart-critical: #d03b3b;
+        --chart-grid: #2c2c2a;
+        --chart-muted: #898781;
     }
     * {
         @apply border-border;
@@ -72,6 +84,12 @@
     *::-webkit-scrollbar-thumb:hover {
         background-color: hsl(var(--muted-foreground) / 0.5);
         background-clip: padding-box;
+    }
+    [data-radix-select-viewport] {
+        scrollbar-width: thin !important;
+    }
+    [data-radix-select-viewport]::-webkit-scrollbar {
+        display: block !important;
     }
 }
 

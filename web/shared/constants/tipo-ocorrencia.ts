@@ -1,6 +1,7 @@
 import {
     Banknote,
     Building2,
+    BrushCleaning,
     CircleHelp,
     DoorOpen,
     Droplets,
@@ -22,6 +23,7 @@ export const TIPO_OCORRENCIA_OPTIONS = [
     { value: 'DANOS_IMOVEL', label: 'Danos ao imóvel' },
     { value: 'DEBITO_ALUGUEL', label: 'Débito de aluguel' },
     { value: 'DESCUMPRIMENTO_CONTRATUAL', label: 'Descumprimento contratual' },
+    { value: 'HIGIENE_LIMPEZA', label: 'Higiene e Limpeza' },
     { value: 'LUZ_AGUA_IPTU', label: 'Luz/Água/Iptu' },
     { value: 'MULTA_RESCISORIA_NAO_QUITADA', label: 'Multa rescisória não quitada' },
     { value: 'PERTURBACAO_SOSSEGO', label: 'Perturbação do sossego' },
@@ -42,6 +44,7 @@ export const TIPO_OCORRENCIA_ICON: Record<string, LucideIcon> = {
     DANOS_IMOVEL: ShieldAlert,
     DEBITO_ALUGUEL: Banknote,
     DESCUMPRIMENTO_CONTRATUAL: FileWarning,
+    HIGIENE_LIMPEZA: BrushCleaning,
     LUZ_AGUA_IPTU: Droplets,
     MULTA_RESCISORIA_NAO_QUITADA: Hammer,
     PERTURBACAO_SOSSEGO: Volume2,

@@ -2,6 +2,7 @@ import { apiClient } from './api.service'
 import { TipoOcorrencia } from '@/shared/constants/tipo-ocorrencia'
 import { SituacaoOcorrencia } from '@/shared/constants/situacao-ocorrencia'
 import { FaixaValorOcorrencia } from '@/shared/constants/faixa-valor-ocorrencia'
+import { GravidadeOcorrencia } from '@/shared/constants/gravidade-ocorrencia'
 
 export interface ConsultaResult {
     constamInformacoes: boolean
@@ -14,6 +15,7 @@ export interface OcorrenciaDetalhe {
     dataOcorrencia: string
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
+    gravidade: GravidadeOcorrencia
     createdAt: string
     imobiliaria: { nomeFantasia: string | null; razaoSocial: string }
 }
@@ -25,6 +27,7 @@ export interface OcorrenciaExcluivel {
     dataOcorrencia: string
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
+    gravidade: GravidadeOcorrencia
     createdAt: string
 }
 
@@ -36,6 +39,7 @@ export interface OcorrenciaCreateInput {
     dataOcorrencia: string
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
+    gravidade: GravidadeOcorrencia
 }
 
 export interface OcorrenciaAdmin {

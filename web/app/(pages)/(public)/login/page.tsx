@@ -15,7 +15,6 @@ import { Input } from '@/components/ui/input'
 import { authService } from '@/app/services/auth.service'
 import { getErrorMessage } from '@/lib/get-error-message'
 import { useDelayedLoading } from '@/lib/use-delayed-loading'
-import { ROUTES } from '@/shared/enums/routes.enum'
 
 const loginSchema = z.object({
     login: z.string().min(1, 'Informe o usuário ou e-mail'),
@@ -53,7 +52,7 @@ function LoginForm() {
         try {
             await authService.login(values.login, values.password)
             const returnTo = searchParams.get('returnTo')
-            window.location.href = returnTo || ROUTES.CONSULTAR
+            window.location.href = returnTo || '/'
         } catch (error) {
             toast.error(getErrorMessage(error, 'Login ou senha incorretos'))
             setEnviando(false)

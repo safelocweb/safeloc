@@ -8,6 +8,7 @@ import { Button } from './ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { cn } from '@/lib/utils'
 import { formatCpf } from '@/lib/format-cpf'
+import { useNonPassiveWheelScroll } from '@/lib/use-non-passive-wheel-scroll'
 import { useUser } from '@/app/providers/user-provider'
 import { notificacaoService, Notificacao } from '@/app/services/notificacao.service'
 import { ROUTES } from '@/shared/enums/routes.enum'
@@ -39,6 +40,7 @@ export function NotificacaoSino() {
     const router = useRouter()
     const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
+    const listRef = useNonPassiveWheelScroll<HTMLDivElement>()
 
     const { data } = useQuery({
         queryKey: ['notificacoes'],
@@ -92,7 +94,7 @@ export function NotificacaoSino() {
                         </Button>
                     )}
                 </div>
-                <div className="max-h-96 overflow-y-auto">
+                <div ref={listRef} className="max-h-96 overflow-y-auto">
                     {!data || data.notificacoes.length === 0 ? (
                         <p className="p-4 text-center text-sm text-muted-foreground">Nenhuma notificação por aqui.</p>
                     ) : (

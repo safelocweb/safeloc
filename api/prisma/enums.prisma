@@ -21,6 +21,7 @@ enum TipoOcorrencia {
     DANOS_IMOVEL
     DEBITO_ALUGUEL
     DESCUMPRIMENTO_CONTRATUAL
+    HIGIENE_LIMPEZA
     LUZ_AGUA_IPTU
     MULTA_RESCISORIA_NAO_QUITADA
     PERTURBACAO_SOSSEGO
@@ -35,9 +36,16 @@ enum SituacaoOcorrencia {
 }
 
 enum FaixaValorOcorrencia {
-    ATE_5_MIL
-    DE_5_MIL_A_20_MIL
-    ACIMA_20_MIL
+    ATE_1_MIL
+    DE_1_MIL_A_2_MIL
+    DE_2_MIL_A_5_MIL
+    ACIMA_10_MIL
+}
+
+enum GravidadeOcorrencia {
+    BAIXA
+    MEDIA
+    ALTA
 }
 
 enum StatusOcorrencia {

@@ -4,6 +4,7 @@ import * as React from 'react'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useNonPassiveWheelScroll } from '@/lib/use-non-passive-wheel-scroll'
 
 const Select = SelectPrimitive.Root
 
@@ -35,22 +36,29 @@ SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 const SelectContent = React.forwardRef<
     React.ElementRef<typeof SelectPrimitive.Content>,
     React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = 'popper', ...props }, ref) => (
-    <SelectPrimitive.Portal>
-        <SelectPrimitive.Content
-            ref={ref}
-            position={position}
-            className={cn(
-                'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-md',
-                position === 'popper' && 'w-[var(--radix-select-trigger-width)]',
-                className
-            )}
-            {...props}
-        >
-            <SelectPrimitive.Viewport className="p-1">{children}</SelectPrimitive.Viewport>
-        </SelectPrimitive.Content>
-    </SelectPrimitive.Portal>
-))
+>(({ className, children, position = 'popper', sideOffset = 4, ...props }, ref) => {
+    const viewportRef = useNonPassiveWheelScroll<HTMLDivElement>()
+
+    return (
+        <SelectPrimitive.Portal>
+            <SelectPrimitive.Content
+                ref={ref}
+                position={position}
+                sideOffset={sideOffset}
+                className={cn(
+                    'relative z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-md',
+                    position === 'popper' && 'w-[var(--radix-select-trigger-width)]',
+                    className
+                )}
+                {...props}
+            >
+                <SelectPrimitive.Viewport ref={viewportRef} className="max-h-64 overflow-y-auto p-1">
+                    {children}
+                </SelectPrimitive.Viewport>
+            </SelectPrimitive.Content>
+        </SelectPrimitive.Portal>
+    )
+})
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
 const SelectItem = React.forwardRef<

@@ -4,7 +4,17 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { Menu, Search, PlusCircle, Trash2, Users, MessageSquareWarning, ShieldCheck, LogOut } from 'lucide-react'
+import {
+    Menu,
+    LayoutDashboard,
+    Search,
+    PlusCircle,
+    Trash2,
+    Users,
+    MessageSquareWarning,
+    ShieldCheck,
+    LogOut
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { AppFooter } from '@/components/app-footer'
 import { AppLoading } from '@/components/app-loading'
@@ -18,6 +28,7 @@ import { APP_VERSION } from '@/shared/constants/versao'
 import { ROUTES } from '@/shared/enums/routes.enum'
 
 const NAV_ITEMS = [
+    { href: ROUTES.DASHBOARD, label: 'Dashboard', icon: LayoutDashboard },
     { href: ROUTES.CONSULTAR, label: 'Consultar Ocorrências', icon: Search },
     { href: ROUTES.INSERIR, label: 'Inserir Ocorrências', icon: PlusCircle },
     { href: ROUTES.EXCLUIR, label: 'Excluir Ocorrências', icon: Trash2 },

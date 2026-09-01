@@ -146,60 +146,60 @@ function UsuariosPage() {
                 {usuarios?.map((usuario) => (
                     <div
                         key={usuario.id}
-                        className="flex flex-col gap-2 rounded-md border border-border p-3 text-sm"
+                        className="flex flex-col gap-3 rounded-md border border-border p-3 text-sm sm:flex-row sm:items-center sm:justify-between"
                     >
-                        <div className="flex items-center justify-between gap-3">
-                            <div className="flex min-w-0 items-center gap-3">
-                                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                                    <Users className="h-4 w-4" />
-                                </span>
-                                <div className="flex min-w-0 flex-wrap items-center gap-2 font-medium">
+                        <div className="flex min-w-0 items-start gap-3">
+                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                                <Users className="h-4 w-4" />
+                            </span>
+                            <div className="flex min-w-0 flex-col gap-1">
+                                <div className="flex flex-wrap items-center gap-2 font-medium">
                                     {usuario.nomeCompleto}
                                     <Badge variant={usuario.status === 'ATIVO' ? 'default' : 'outline'}>
                                         {usuario.status === 'ATIVO' ? 'Ativo' : 'Inativo'}
                                     </Badge>
                                     <Badge variant="outline">{PAPEL_LABEL[usuario.papel]}</Badge>
                                 </div>
-                            </div>
-                            <div className="flex shrink-0 items-center gap-2">
-                                {papelMutation.isPending && papelMutation.variables?.id === usuario.id && (
-                                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-                                )}
-                                <Select
-                                    value={usuario.papel}
-                                    disabled={papelMutation.isPending}
-                                    onValueChange={(valor) =>
-                                        papelMutation.mutate({ id: usuario.id, papel: valor as 'ADMIN' | 'PADRAO' })
-                                    }
-                                >
-                                    <SelectTrigger className="h-8 w-36" aria-label="Papel do usuário">
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="ADMIN">Administrador</SelectItem>
-                                        <SelectItem value="PADRAO">Padrão</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                {mostrarCarregandoStatus && statusMutation.variables?.id === usuario.id && (
-                                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-                                )}
-                                <Switch
-                                    checked={usuario.status === 'ATIVO'}
-                                    disabled={statusMutation.isPending}
-                                    onCheckedChange={(checked) => {
-                                        if (checked) {
-                                            statusMutation.mutate({ id: usuario.id, status: 'ATIVO' })
-                                        } else {
-                                            setUsuarioParaDesativar(usuario)
-                                        }
-                                    }}
-                                    aria-label={usuario.status === 'ATIVO' ? 'Desativar usuário' : 'Reativar usuário'}
-                                />
+                                <p className="text-muted-foreground">
+                                    {usuario.login} · {usuario.email}
+                                </p>
                             </div>
                         </div>
-                        <p className="pl-11 text-muted-foreground">
-                            {usuario.login} · {usuario.email}
-                        </p>
+                        <div className="flex shrink-0 items-center gap-2 pl-11 sm:pl-0">
+                            {papelMutation.isPending && papelMutation.variables?.id === usuario.id && (
+                                <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                            )}
+                            <Select
+                                value={usuario.papel}
+                                disabled={papelMutation.isPending}
+                                onValueChange={(valor) =>
+                                    papelMutation.mutate({ id: usuario.id, papel: valor as 'ADMIN' | 'PADRAO' })
+                                }
+                            >
+                                <SelectTrigger className="h-8 w-36" aria-label="Papel do usuário">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="ADMIN">Administrador</SelectItem>
+                                    <SelectItem value="PADRAO">Padrão</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            {mostrarCarregandoStatus && statusMutation.variables?.id === usuario.id && (
+                                <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                            )}
+                            <Switch
+                                checked={usuario.status === 'ATIVO'}
+                                disabled={statusMutation.isPending}
+                                onCheckedChange={(checked) => {
+                                    if (checked) {
+                                        statusMutation.mutate({ id: usuario.id, status: 'ATIVO' })
+                                    } else {
+                                        setUsuarioParaDesativar(usuario)
+                                    }
+                                }}
+                                aria-label={usuario.status === 'ATIVO' ? 'Desativar usuário' : 'Reativar usuário'}
+                            />
+                        </div>
                     </div>
                 ))}
             </ListagemCard>

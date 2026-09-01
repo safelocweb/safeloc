@@ -11,6 +11,7 @@ import ImobiliariaModule from './modules/core/imobiliaria/imobiliaria.module'
 import UsuarioModule from './modules/core/usuario/usuario.module'
 import OcorrenciaModule from './modules/core/ocorrencia/ocorrencia.module'
 import ContestacaoModule from './modules/core/contestacao/contestacao.module'
+import DashboardModule from './modules/core/dashboard/dashboard.module'
 import NotificacaoModule from './modules/core/notificacao/notificacao.module'
 import LogModule from './modules/core/log/log.module'
 import TermoAceiteModule from './modules/core/termo-aceite/termo-aceite.module'
@@ -42,6 +43,7 @@ import TermoAceiteModule from './modules/core/termo-aceite/termo-aceite.module'
         UsuarioModule,
         OcorrenciaModule,
         ContestacaoModule,
+        DashboardModule,
         NotificacaoModule,
         LogModule,
         TermoAceiteModule

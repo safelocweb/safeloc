@@ -23,6 +23,7 @@ import { ocorrenciaService, OcorrenciaCreateInput } from '@/app/services/ocorren
 import { TIPO_OCORRENCIA_OPTIONS } from '@/shared/constants/tipo-ocorrencia'
 import { SITUACAO_OCORRENCIA_OPTIONS } from '@/shared/constants/situacao-ocorrencia'
 import { FAIXA_VALOR_OCORRENCIA_OPTIONS } from '@/shared/constants/faixa-valor-ocorrencia'
+import { GRAVIDADE_OCORRENCIA_OPTIONS } from '@/shared/constants/gravidade-ocorrencia'
 
 const dataNaoFutura = (valor: string) => new Date(valor) <= new Date()
 
@@ -40,6 +41,7 @@ const inserirSchema = z.object({
         .refine(dataNaoFutura, 'Data da ocorrência não pode ser no futuro'),
     situacaoAtual: z.string().min(1, 'Selecione a situação atual'),
     faixaValor: z.string().min(1, 'Selecione a faixa de valor'),
+    gravidade: z.string().min(1, 'Selecione a gravidade'),
     declaracaoFundamento: z.boolean().refine((valor) => valor, 'Confirme esta declaração'),
     declaracaoVeracidade: z.boolean().refine((valor) => valor, 'Confirme esta declaração'),
     declaracaoCiencia: z.boolean().refine((valor) => valor, 'Confirme esta declaração')
@@ -85,6 +87,7 @@ function InserirPage() {
             dataOcorrencia: '',
             situacaoAtual: '',
             faixaValor: '',
+            gravidade: '',
             declaracaoFundamento: false,
             declaracaoVeracidade: false,
             declaracaoCiencia: false
@@ -118,14 +121,14 @@ function InserirPage() {
     }
 
     return (
-        <Card className="flex flex-col">
+        <Card className="flex min-h-full flex-col md:h-full md:min-h-0">
             <CardHeader className="shrink-0">
                 <CardTitle>Inserir informações</CardTitle>
                 <CardDescription>Registre uma ocorrência locatícia de um inquilino</CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col">
+            <CardContent className="flex flex-1 flex-col md:min-h-0 md:overflow-y-auto">
                 <form
-                    className="flex w-full flex-col gap-7 sm:gap-8"
+                    className="flex w-full flex-1 flex-col gap-7 sm:gap-8"
                     noValidate
                     onSubmit={handleSubmit((values) => inserirMutation.mutate(values))}
                 >
@@ -279,6 +282,31 @@ function InserirPage() {
                                     <p className="text-xs text-destructive">{errors.faixaValor.message}</p>
                                 )}
                             </div>
+
+                            <div className="col-span-12 flex flex-col gap-1.5 sm:col-span-6 lg:col-span-3">
+                                <Controller
+                                    key={formKey}
+                                    name="gravidade"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select value={field.value} onValueChange={field.onChange}>
+                                            <SelectTrigger id="gravidade">
+                                                <SelectValue placeholder="Gravidade" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {GRAVIDADE_OCORRENCIA_OPTIONS.map((option) => (
+                                                    <SelectItem key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    )}
+                                />
+                                {errors.gravidade && (
+                                    <p className="text-xs text-destructive">{errors.gravidade.message}</p>
+                                )}
+                            </div>
                         </div>
                     </div>
 
@@ -322,6 +350,8 @@ function InserirPage() {
                             <span>Aceito todos os termos acima</span>
                         </label>
                     </div>
+
+                    <div className="hidden flex-1 md:block" />
 
                     <Button
                         type="submit"

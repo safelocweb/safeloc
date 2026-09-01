@@ -18,6 +18,7 @@ export class OcorrenciaInserirUsecase {
                 dataOcorrencia: new Date(input.dataOcorrencia),
                 situacaoAtual: input.situacaoAtual,
                 faixaValor: input.faixaValor,
+                gravidade: input.gravidade,
                 imobiliariaId,
                 usuarioId
             }

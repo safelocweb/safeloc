@@ -11,7 +11,12 @@ export default function HomePage() {
 
     useEffect(() => {
         if (carregando) return
-        router.replace(usuario ? ROUTES.CONSULTAR : ROUTES.LOGIN)
+        if (!usuario) {
+            router.replace(ROUTES.LOGIN)
+            return
+        }
+        const usuarioPadrao = usuario.role === 'IMOBILIARIA' && usuario.papel === 'PADRAO'
+        router.replace(usuarioPadrao ? ROUTES.CONSULTAR : ROUTES.DASHBOARD)
     }, [carregando, usuario, router])
 
     return null

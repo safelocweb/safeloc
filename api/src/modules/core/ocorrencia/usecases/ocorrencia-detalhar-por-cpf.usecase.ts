@@ -15,6 +15,7 @@ export class OcorrenciaDetalharPorCpfUsecase {
                 dataOcorrencia: true,
                 situacaoAtual: true,
                 faixaValor: true,
+                gravidade: true,
                 createdAt: true,
                 imobiliaria: { select: { nomeFantasia: true, razaoSocial: true } }
             },

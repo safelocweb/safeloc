@@ -20,6 +20,7 @@ import {
 } from '@/shared/constants/tipo-ocorrencia'
 import { SITUACAO_OCORRENCIA_LABEL } from '@/shared/constants/situacao-ocorrencia'
 import { FAIXA_VALOR_OCORRENCIA_LABEL } from '@/shared/constants/faixa-valor-ocorrencia'
+import { GRAVIDADE_OCORRENCIA_BADGE_CLASS, GRAVIDADE_OCORRENCIA_LABEL } from '@/shared/constants/gravidade-ocorrencia'
 
 function ExcluirPage() {
     const [registros, setRegistros] = useState<OcorrenciaExcluivel[] | null>(null)
@@ -130,6 +131,9 @@ function ExcluirPage() {
                                             </div>
                                             <div className="pl-11">
                                                 <div className="mt-2 flex flex-wrap gap-1.5">
+                                                    <Badge className={GRAVIDADE_OCORRENCIA_BADGE_CLASS[registro.gravidade]}>
+                                                        {GRAVIDADE_OCORRENCIA_LABEL[registro.gravidade]}
+                                                    </Badge>
                                                     <Badge variant="outline">
                                                         {SITUACAO_OCORRENCIA_LABEL[registro.situacaoAtual]}
                                                     </Badge>
