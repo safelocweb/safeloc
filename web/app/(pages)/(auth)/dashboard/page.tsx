@@ -1,8 +1,8 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { FileSearch, Gauge, MessageSquareWarning, Search } from 'lucide-react'
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { FileSearch, Gauge, MessageSquareWarning, Search, TrendingUp } from 'lucide-react'
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { dashboardService, StatusContestacaoEfetivo } from '@/app/services/dashboard.service'
@@ -11,7 +11,7 @@ import {
     GRAVIDADE_OCORRENCIA_LABEL,
     GRAVIDADE_OCORRENCIA_OPTIONS
 } from '@/shared/constants/gravidade-ocorrencia'
-import { STATUS_CONTESTACAO_DOT_CLASSNAME, STATUS_CONTESTACAO_LABEL } from '@/shared/constants/status-contestacao'
+import { STATUS_CONTESTACAO_LABEL } from '@/shared/constants/status-contestacao'
 
 const ORDEM_STATUS_CONTESTACAO: StatusContestacaoEfetivo[] = [
     'ABERTA',
@@ -49,14 +49,14 @@ function StatCard({
     value: number
 }) {
     return (
-        <Card>
+        <Card className="overflow-hidden border-border/70 bg-card/95 shadow-sm transition-shadow hover:shadow-md">
             <CardContent className="flex items-center gap-3 p-4">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Icon className="h-4 w-4" />
                 </span>
                 <div className="min-w-0">
                     <p className="text-xs leading-tight text-muted-foreground">{label}</p>
-                    <p className="text-xl font-semibold tabular-nums text-foreground">
+                    <p className="text-2xl font-bold tabular-nums text-foreground">
                         {value.toLocaleString('pt-BR')}
                     </p>
                 </div>
@@ -101,14 +101,27 @@ function DashboardPage() {
         (total, option) => total + resumo.distribuicaoGravidade[option.value],
         0
     )
+    const gravidadeChartData = GRAVIDADE_OCORRENCIA_OPTIONS.map((option) => ({
+        name: GRAVIDADE_OCORRENCIA_LABEL[option.value],
+        value: resumo.distribuicaoGravidade[option.value],
+        color: GRAVIDADE_OCORRENCIA_CHART_COLOR[option.value]
+    }))
+    const contestacaoChartData = ORDEM_STATUS_CONTESTACAO.map((status) => ({
+        name: STATUS_CONTESTACAO_LABEL[status],
+        total: resumo.contestacoesPorStatus[status]
+    }))
 
     return (
-        <div className="flex flex-col gap-5">
-            <div>
-                <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-                <p className="text-sm text-muted-foreground">
+        <div className="flex flex-col gap-6">
+            <div className="relative overflow-hidden rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/15 via-card to-blue-500/10 p-6 shadow-sm">
+                <div className="absolute -right-10 -top-14 h-44 w-44 rounded-full bg-primary/15 blur-3xl" />
+                <div className="relative">
+                    <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-primary"><TrendingUp className="h-4 w-4" />Painel estratégico</div>
+                    <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Visão geral da sua operação</h1>
+                    <p className="mt-1 text-sm text-muted-foreground">
                     Visão geral dos registros e consultas da sua imobiliária
-                </p>
+                    </p>
+                </div>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -117,12 +130,12 @@ function DashboardPage() {
                 <StatCard icon={MessageSquareWarning} label="Contestações recebidas" value={totalContestacoes} />
             </div>
 
-            <Card>
+            <Card className="overflow-hidden border-border/70 bg-card/95 shadow-sm">
                 <CardHeader className="px-6 py-4">
                     <CardTitle>Registros da sua imobiliária</CardTitle>
                     <CardDescription>Ocorrências inseridas nos últimos 6 meses</CardDescription>
                 </CardHeader>
-                <CardContent className="h-44 pt-0 sm:h-52">
+                <CardContent className="h-52 pt-0 sm:h-60">
                     <ResponsiveContainer width="100%" height="100%">
                         <AreaChart
                             data={resumo.serieMensalImobiliaria}
@@ -194,13 +207,13 @@ function DashboardPage() {
                 </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 mb-4">
-                <Card className="flex flex-col lg:col-span-2">
+            <div className="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+                <Card className="flex flex-col border-border/70 bg-card/95 shadow-sm">
                     <CardHeader className="px-6 py-4">
                         <CardTitle>Distribuição por gravidade</CardTitle>
                         <CardDescription>Ocorrências ativas da sua imobiliária, por gravidade</CardDescription>
                     </CardHeader>
-                    <CardContent className="flex flex-1 flex-col justify-center gap-5 pt-0">
+                    <CardContent className="flex min-h-64 flex-1 items-center justify-center pt-0">
                         {totalGravidade === 0 ? (
                             <div className="flex flex-col items-center justify-center gap-3 py-10">
                                 <span className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
@@ -211,47 +224,17 @@ function DashboardPage() {
                                 </p>
                             </div>
                         ) : (
-                            <ul className="flex flex-col gap-5">
-                                {GRAVIDADE_OCORRENCIA_OPTIONS.map((option) => {
-                                    const quantidade = resumo.distribuicaoGravidade[option.value]
-                                    const percentual = totalGravidade > 0 ? (quantidade / totalGravidade) * 100 : 0
-                                    return (
-                                        <li key={option.value} className="flex flex-col gap-2">
-                                            <div className="flex items-center justify-between text-sm">
-                                                <span className="flex items-center gap-2 text-muted-foreground">
-                                                    <span
-                                                        className="h-2.5 w-2.5 shrink-0 rounded-full"
-                                                        style={{ backgroundColor: GRAVIDADE_OCORRENCIA_CHART_COLOR[option.value] }}
-                                                    />
-                                                    {GRAVIDADE_OCORRENCIA_LABEL[option.value]}
-                                                </span>
-                                                <span className="font-medium tabular-nums text-foreground">
-                                                    {quantidade.toLocaleString('pt-BR')}
-                                                </span>
-                                            </div>
-                                            <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
-                                                <div
-                                                    className="h-full rounded-full transition-all"
-                                                    style={{
-                                                        width: `${percentual}%`,
-                                                        backgroundColor: GRAVIDADE_OCORRENCIA_CHART_COLOR[option.value]
-                                                    }}
-                                                />
-                                            </div>
-                                        </li>
-                                    )
-                                })}
-                            </ul>
+                            <ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={gravidadeChartData} dataKey="value" nameKey="name" innerRadius="55%" outerRadius="82%" paddingAngle={4}>{gravidadeChartData.map((item) => <Cell key={item.name} fill={item.color} />)}</Pie><Tooltip formatter={formatarValorTooltip('Ocorrências')} contentStyle={{ backgroundColor: 'hsl(var(--popover))', border: '1px solid hsl(var(--border))', borderRadius: 8 }} /></PieChart></ResponsiveContainer>
                         )}
                     </CardContent>
                 </Card>
 
-                <Card className="flex flex-col">
+                <Card className="flex flex-col border-border/70 bg-card/95 shadow-sm">
                     <CardHeader className="px-6 py-4">
                         <CardTitle>Contestações por status</CardTitle>
                         <CardDescription>Total: {totalContestacoes.toLocaleString('pt-BR')}</CardDescription>
                     </CardHeader>
-                    <CardContent className="flex flex-1 flex-col justify-center gap-4 pt-0">
+                    <CardContent className="min-h-64 pt-0">
                         {totalContestacoes === 0 ? (
                             <div className="flex flex-col items-center justify-center gap-3 py-10">
                                 <span className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
@@ -262,21 +245,7 @@ function DashboardPage() {
                                 </p>
                             </div>
                         ) : (
-                            <ul className="flex flex-col gap-4">
-                                {ORDEM_STATUS_CONTESTACAO.map((status) => (
-                                    <li key={status} className="flex items-center justify-between text-sm">
-                                        <span className="flex items-center gap-2 text-muted-foreground">
-                                            <span
-                                                className={`h-2.5 w-2.5 shrink-0 rounded-full ${STATUS_CONTESTACAO_DOT_CLASSNAME[status]}`}
-                                            />
-                                            {STATUS_CONTESTACAO_LABEL[status]}
-                                        </span>
-                                        <span className="font-medium tabular-nums text-foreground">
-                                            {resumo.contestacoesPorStatus[status].toLocaleString('pt-BR')}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
+                            <ResponsiveContainer width="100%" height="100%"><BarChart data={contestacaoChartData} layout="vertical" margin={{ left: 18 }}><XAxis type="number" allowDecimals={false} hide /><YAxis type="category" dataKey="name" width={94} tickLine={false} axisLine={false} fontSize={11} stroke="hsl(var(--muted-foreground))" /><Tooltip formatter={formatarValorTooltip('Contestações')} cursor={{ fill: 'hsl(var(--muted))' }} contentStyle={{ backgroundColor: 'hsl(var(--popover))', border: '1px solid hsl(var(--border))', borderRadius: 8 }} /><Bar dataKey="total" fill="var(--chart-blue)" radius={[0, 6, 6, 0]} /></BarChart></ResponsiveContainer>
                         )}
                     </CardContent>
                 </Card>

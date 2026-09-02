@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Eye, EyeOff, Loader2, ShieldCheck } from 'lucide-react'
 import Image from 'next/image'
 import { Suspense, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -60,21 +60,21 @@ function LoginForm() {
     }
 
     return (
-        <Card className="w-full overflow-hidden shadow-xl shadow-black/5">
-            <div className="h-1 w-full bg-gradient-to-r from-primary to-[hsl(200_47%_16%)]" />
+        <Card className="w-full overflow-hidden border-white/10 bg-card/95 shadow-2xl shadow-black/30 backdrop-blur-xl">
+            <div className="h-1.5 w-full bg-gradient-to-r from-primary via-cyan-400 to-blue-500" />
 
-            <CardContent className="flex flex-col items-center gap-3 p-6">
+            <CardContent className="flex flex-col items-center gap-4 p-7 sm:p-8">
                 <Image
                     src="/logo.png"
                     alt="Safeloc"
                     width={72}
                     height={72}
                     priority
-                    className="h-[4.5rem] w-[4.5rem] rounded-2xl shadow-lg shadow-primary/25"
+                    className="h-[4.5rem] w-[4.5rem] rounded-2xl ring-4 ring-primary/15 shadow-xl shadow-primary/25"
                 />
 
                 <div className="text-center">
-                    <p className="text-xl font-bold tracking-tight">
+                    <p className="text-2xl font-bold tracking-tight">
                         Safe<span className="text-primary">loc</span>
                     </p>
                     <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -82,10 +82,9 @@ function LoginForm() {
                     </p>
                 </div>
 
-                <div className="flex items-center gap-1.5 py-1" aria-hidden>
-                    <span className="h-1 w-1 rounded-full bg-border" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    <span className="h-1 w-1 rounded-full bg-border" />
+                <div className="flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1.5 text-[11px] font-medium text-primary">
+                    <ShieldCheck className="h-3.5 w-3.5" />
+                    Acesso seguro para imobiliárias
                 </div>
 
                 <form className="flex w-full flex-col gap-4 pt-2" onSubmit={handleSubmit(onSubmit)}>
@@ -129,7 +128,7 @@ function LoginForm() {
                     <Button
                         type="submit"
                         size="lg"
-                        className="shadow-lg shadow-primary/30"
+                        className="mt-1 shadow-lg shadow-primary/30"
                         disabled={enviando}
                     >
                         {mostrarCarregando && <Loader2 className="h-4 w-4 animate-spin" />}

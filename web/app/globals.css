@@ -63,6 +63,10 @@
     }
     body {
         @apply bg-background text-foreground;
+        background-image:
+            radial-gradient(circle at 12% 8%, hsl(var(--primary) / 0.1), transparent 26rem),
+            radial-gradient(circle at 88% 2%, hsl(213 75% 52% / 0.08), transparent 24rem);
+        background-attachment: fixed;
     }
     * {
         scrollbar-width: thin;
@@ -90,6 +94,14 @@
     }
     [data-radix-select-viewport]::-webkit-scrollbar {
         display: block !important;
+    }
+}
+
+@layer utilities {
+    .app-shell-grid {
+        background-image: linear-gradient(hsl(var(--border) / 0.28) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(var(--border) / 0.28) 1px, transparent 1px);
+        background-size: 36px 36px;
     }
 }
 
