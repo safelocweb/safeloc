@@ -20,7 +20,12 @@ import TermoAceiteModule from './modules/core/termo-aceite/termo-aceite.module'
     imports: [
         ConfigModule.forRoot({
             isGlobal: true,
-            envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
+            envFilePath: [
+                `.env.${process.env.NODE_ENV || 'development'}.local`,
+                '.env.local',
+                `.env.${process.env.NODE_ENV || 'development'}`,
+                '.env'
+            ],
             validationSchema: Joi.object({
                 DATABASE_URL: Joi.string().required(),
                 PORT: Joi.number().required(),

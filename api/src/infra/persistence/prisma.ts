@@ -3,17 +3,24 @@ import * as path from 'path'
 import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 
-const envFile = `.env.${process.env.NODE_ENV || 'development'}`
-const envPath = path.resolve(process.cwd(), envFile)
+const environment = process.env.NODE_ENV || 'development'
+const envFiles = [
+    `.env.${environment}.local`,
+    '.env.local',
+    `.env.${environment}`,
+    '.env'
+]
+const envPaths = envFiles.map((envFile) => path.resolve(process.cwd(), envFile))
 
-dotenv.config({ path: envPath })
-dotenv.config({ path: path.resolve(process.cwd(), '.env') })
+for (const envPath of envPaths) {
+    dotenv.config({ path: envPath })
+}
 
 const connectionString = process.env.DATABASE_URL
 
 if (!connectionString) {
     throw new Error(
-        `DATABASE_URL is not defined. Tried loading: ${envPath} and .env (cwd: ${process.cwd()})`
+        `DATABASE_URL is not defined. Tried loading: ${envFiles.join(', ')} (cwd: ${process.cwd()})`
     )
 }
 

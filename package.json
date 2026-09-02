@@ -1,0 +1,15 @@
+{
+  "name": "safeloc",
+  "private": true,
+  "scripts": {
+    "setup": "node scripts/setup-local-env.mjs",
+    "install:all": "npm --prefix api ci && npm --prefix web ci",
+    "db:up": "docker compose -f api/docker-compose.yml up -d",
+    "db:down": "docker compose -f api/docker-compose.yml down",
+    "db:migrate": "npm --prefix api run psm",
+    "db:seed": "npm --prefix api run seed",
+    "dev:api": "npm --prefix api run dev",
+    "dev:web": "npm --prefix web run dev",
+    "build": "npm --prefix api run build && npm --prefix web run build"
+  }
+}

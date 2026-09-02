@@ -22,12 +22,12 @@
         "psm": "prisma migrate deploy && prisma generate",
         "psm:dev": "cross-env NODE_ENV=development prisma migrate dev && prisma generate",
         "psm:gen": "prisma generate",
-        "seed": "cross-env NODE_ENV=development ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
+        "seed": "cross-env NODE_ENV=development ts-node prisma/seed.ts",
         "postinstall": "prisma generate",
         "vercel-build": "prisma migrate deploy"
     },
     "prisma": {
-        "seed": "cross-env NODE_ENV=development ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts"
+        "seed": "cross-env NODE_ENV=development ts-node prisma/seed.ts"
     },
     "dependencies": {
         "@nestjs/common": "^11.0.1",

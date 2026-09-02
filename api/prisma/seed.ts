@@ -1,8 +1,3 @@
-import * as dotenv from 'dotenv'
-import * as path from 'path'
-
-dotenv.config({ path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV || 'development'}`) })
-
 import * as bcrypt from 'bcryptjs'
 import prisma from '../src/infra/persistence/prisma'
 
