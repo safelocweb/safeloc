@@ -41,6 +41,7 @@ export class OcorrenciaListarTodasUsecase {
                     dataOcorrencia: true,
                     situacaoAtual: true,
                     faixaValor: true,
+                    mensagem: true,
                     status: true,
                     createdAt: true,
                     imobiliaria: { select: { id: true, nomeFantasia: true, razaoSocial: true } },

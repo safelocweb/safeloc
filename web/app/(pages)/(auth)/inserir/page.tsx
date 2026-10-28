@@ -15,13 +15,19 @@ import { CpfInput } from '@/components/ui/cpf-input'
 import { DateInput } from '@/components/ui/date-input'
 import { FloatingField } from '@/components/ui/floating-field'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
 import { getErrorMessage } from '@/lib/get-error-message'
 import { isCpfComplete } from '@/lib/format-cpf'
 import { useDelayedLoading } from '@/lib/use-delayed-loading'
 import { ocorrenciaService, OcorrenciaCreateInput } from '@/app/services/ocorrencia.service'
-import { TIPO_OCORRENCIA_OPTIONS } from '@/shared/constants/tipo-ocorrencia'
+import {
+    MENSAGEM_OCORRENCIA_MAX_CARACTERES,
+    TIPO_OCORRENCIA_OPTIONS,
+    tipoPermiteMensagem
+} from '@/shared/constants/tipo-ocorrencia'
 import { SITUACAO_OCORRENCIA_OPTIONS } from '@/shared/constants/situacao-ocorrencia'
 import {
     FAIXA_VALOR_OCORRENCIA_NIVEL,
@@ -47,6 +53,9 @@ const inserirSchema = z.object({
     situacaoAtual: z.string().min(1, 'Selecione a situação atual'),
     faixaValor: z.string().min(1, 'Selecione a faixa de valor'),
     gravidade: z.string().min(1, 'Selecione a gravidade'),
+    mensagem: z
+        .string()
+        .max(MENSAGEM_OCORRENCIA_MAX_CARACTERES, `A mensagem deve ter no máximo ${MENSAGEM_OCORRENCIA_MAX_CARACTERES} caracteres`),
     declaracaoFundamento: z.boolean().refine((valor) => valor, 'Confirme esta declaração'),
     declaracaoVeracidade: z.boolean().refine((valor) => valor, 'Confirme esta declaração'),
     declaracaoCiencia: z.boolean().refine((valor) => valor, 'Confirme esta declaração')
@@ -93,6 +102,7 @@ function InserirPage() {
             situacaoAtual: '',
             faixaValor: '',
             gravidade: '',
+            mensagem: '',
             declaracaoFundamento: false,
             declaracaoVeracidade: false,
             declaracaoCiencia: false
@@ -101,8 +111,12 @@ function InserirPage() {
 
     const inserirMutation = useMutation({
         mutationFn: (values: InserirFormValues) => {
-            const { declaracaoFundamento, declaracaoVeracidade, declaracaoCiencia, ...input } = values
-            return ocorrenciaService.inserir(input as OcorrenciaCreateInput)
+            const { declaracaoFundamento, declaracaoVeracidade, declaracaoCiencia, mensagem, ...input } = values
+            const mensagemEnviada = tipoPermiteMensagem(input.tipo) ? mensagem.trim() : ''
+            return ocorrenciaService.inserir({
+                ...input,
+                ...(mensagemEnviada && { mensagem: mensagemEnviada })
+            } as OcorrenciaCreateInput)
         },
         onSuccess: () => {
             toast.success('Ocorrência registrada com sucesso.')
@@ -116,6 +130,10 @@ function InserirPage() {
 
     const mostrarCarregando = useDelayedLoading(inserirMutation.isPending)
 
+    const tipoSelecionado = watch('tipo')
+    const mensagem = watch('mensagem')
+    const mostrarMensagem = tipoPermiteMensagem(tipoSelecionado)
+
     const declaracoesMarcadas = DECLARACOES.map((declaracao) => watch(declaracao.name))
     const todasDeclaracoesMarcadas = declaracoesMarcadas.every(Boolean)
 
@@ -127,13 +145,13 @@ function InserirPage() {
 
     return (
         <Card className="flex min-h-full flex-col md:h-full md:min-h-0">
-            <CardHeader className="shrink-0">
+            <CardHeader className="shrink-0 pb-4">
                 <CardTitle>Inserir informações</CardTitle>
                 <CardDescription>Registre uma ocorrência locatícia de um inquilino</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col md:min-h-0 md:overflow-y-auto">
                 <form
-                    className="flex w-full flex-1 flex-col gap-7 sm:gap-8"
+                    className="flex w-full flex-1 flex-col gap-5"
                     noValidate
                     onSubmit={handleSubmit((values) => inserirMutation.mutate(values))}
                 >
@@ -189,16 +207,22 @@ function InserirPage() {
                         </div>
                     </div>
 
-                    <div className="flex shrink-0 flex-col gap-4 border-t border-border pt-7 sm:pt-8">
+                    <div className="flex shrink-0 flex-col gap-4 border-t border-border pt-5">
                         <p className="text-sm font-semibold text-foreground">Dados da ocorrência</p>
-                        <div className="grid grid-cols-12 gap-4">
-                            <div className="col-span-12 flex flex-col gap-1.5 sm:col-span-6 lg:col-span-3">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                            <div className="flex flex-col gap-1.5">
                                 <Controller
                                     key={formKey}
                                     name="tipo"
                                     control={control}
                                     render={({ field }) => (
-                                        <Select value={field.value} onValueChange={field.onChange}>
+                                        <Select
+                                            value={field.value}
+                                            onValueChange={(valor) => {
+                                                field.onChange(valor)
+                                                if (!tipoPermiteMensagem(valor)) setValue('mensagem', '')
+                                            }}
+                                        >
                                             <SelectTrigger id="tipo">
                                                 <SelectValue placeholder="Tipo de ocorrência" />
                                             </SelectTrigger>
@@ -215,7 +239,7 @@ function InserirPage() {
                                 {errors.tipo && <p className="text-xs text-destructive">{errors.tipo.message}</p>}
                             </div>
 
-                            <div className="col-span-12 sm:col-span-6 lg:col-span-3">
+                            <div>
                                 <Controller
                                     key={formKey}
                                     name="dataOcorrencia"
@@ -238,7 +262,7 @@ function InserirPage() {
                                 />
                             </div>
 
-                            <div className="col-span-12 flex flex-col gap-1.5 sm:col-span-6 lg:col-span-3">
+                            <div className="flex flex-col gap-1.5">
                                 <Controller
                                     key={formKey}
                                     name="situacaoAtual"
@@ -263,7 +287,7 @@ function InserirPage() {
                                 )}
                             </div>
 
-                            <div className="col-span-12 flex flex-col gap-1.5 sm:col-span-6 lg:col-span-3">
+                            <div className="flex flex-col gap-1.5">
                                 <Controller
                                     key={formKey}
                                     name="faixaValor"
@@ -296,7 +320,7 @@ function InserirPage() {
                                 )}
                             </div>
 
-                            <div className="col-span-12 flex flex-col gap-1.5 sm:col-span-6 lg:col-span-3">
+                            <div className="flex flex-col gap-1.5">
                                 <Controller
                                     key={formKey}
                                     name="gravidade"
@@ -320,11 +344,35 @@ function InserirPage() {
                                     <p className="text-xs text-destructive">{errors.gravidade.message}</p>
                                 )}
                             </div>
+
+                            {mostrarMensagem && (
+                                <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-5">
+                                    <div className="flex items-center justify-between gap-2">
+                                        <Label htmlFor="mensagem">
+                                            Mensagem <span className="font-normal text-muted-foreground">(opcional)</span>
+                                        </Label>
+                                        <p className="shrink-0 text-xs tabular-nums text-muted-foreground">
+                                            {mensagem.length}/{MENSAGEM_OCORRENCIA_MAX_CARACTERES}
+                                        </p>
+                                    </div>
+                                    <Textarea
+                                        id="mensagem"
+                                        rows={2}
+                                        maxLength={MENSAGEM_OCORRENCIA_MAX_CARACTERES}
+                                        placeholder="Descreva brevemente a ocorrência"
+                                        className={cn('min-h-0', errors.mensagem && 'border-destructive')}
+                                        {...register('mensagem')}
+                                    />
+                                    {errors.mensagem && (
+                                        <p className="text-xs text-destructive">{errors.mensagem.message}</p>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
 
-                    <div className="flex shrink-0 flex-col gap-3 rounded-lg border border-border bg-muted/30 p-4 sm:p-5">
-                        <div className="flex flex-col gap-3">
+                    <div className="flex shrink-0 flex-col gap-2 rounded-lg border border-border bg-muted/30 p-4">
+                        <div className="flex flex-col gap-2.5">
                             <p className="text-sm font-medium text-foreground">Declaração obrigatória</p>
                             {DECLARACOES.map((declaracao) => (
                                 <label
@@ -352,7 +400,7 @@ function InserirPage() {
 
                         <label
                             htmlFor="aceitarTodasDeclaracoes"
-                            className="mt-3 flex cursor-pointer items-start gap-2.5 border-t border-border pt-4 text-sm font-medium text-foreground"
+                            className="mt-1 flex cursor-pointer items-start gap-2.5 border-t border-border pt-3 text-sm font-medium text-foreground"
                         >
                             <Checkbox
                                 id="aceitarTodasDeclaracoes"

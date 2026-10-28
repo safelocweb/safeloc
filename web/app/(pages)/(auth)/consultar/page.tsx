@@ -113,6 +113,7 @@ export default function ConsultarPage() {
                                                 situacaoAtual={ocorrencia.situacaoAtual}
                                                 faixaValor={ocorrencia.faixaValor}
                                                 gravidade={ocorrencia.gravidade}
+                                                mensagem={ocorrencia.mensagem}
                                             >
                                                 <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                                                     <Building2 className="h-3.5 w-3.5" />

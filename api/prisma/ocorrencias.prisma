@@ -8,6 +8,7 @@ model Ocorrencia {
     situacaoAtual           SituacaoOcorrencia
     faixaValor              FaixaValorOcorrencia
     gravidade               GravidadeOcorrencia  @default(MEDIA)
+    mensagem                String?              @db.VarChar(120)
     imobiliariaId           Int
     usuarioId               Int
     status                  StatusOcorrencia     @default(ATIVA)

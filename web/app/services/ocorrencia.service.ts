@@ -16,6 +16,7 @@ export interface OcorrenciaDetalhe {
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
     gravidade: GravidadeOcorrencia
+    mensagem: string | null
     createdAt: string
     imobiliaria: { nomeFantasia: string | null; razaoSocial: string }
 }
@@ -28,6 +29,7 @@ export interface OcorrenciaExcluivel {
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
     gravidade: GravidadeOcorrencia
+    mensagem: string | null
     createdAt: string
 }
 
@@ -40,6 +42,7 @@ export interface OcorrenciaCreateInput {
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
     gravidade: GravidadeOcorrencia
+    mensagem?: string
 }
 
 export interface OcorrenciaAdmin {
@@ -50,6 +53,7 @@ export interface OcorrenciaAdmin {
     dataOcorrencia: string
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
+    mensagem: string | null
     status: 'ATIVA' | 'EXCLUIDA'
     createdAt: string
     imobiliaria: { id: number; nomeFantasia: string | null; razaoSocial: string }

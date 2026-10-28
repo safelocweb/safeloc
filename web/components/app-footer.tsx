@@ -20,7 +20,7 @@ export function AppFooter() {
                     Política de Privacidade
                 </Link>
                 <a
-                    href="mailto:contato@safeloc.com.br"
+                    href="mailto:safelocweb@gmail.com"
                     className="transition-colors hover:text-white hover:underline"
                 >
                     Contato

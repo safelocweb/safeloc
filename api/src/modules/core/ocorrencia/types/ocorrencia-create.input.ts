@@ -1,5 +1,6 @@
-import { IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator'
+import { IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator'
 import { FaixaValorOcorrencia, GravidadeOcorrencia, SituacaoOcorrencia, TipoOcorrencia } from '@prisma/client'
+import { MENSAGEM_OCORRENCIA_MAX_CARACTERES } from './mensagem-ocorrencia'
 
 export class OcorrenciaCreateInput {
     @IsString()
@@ -27,4 +28,11 @@ export class OcorrenciaCreateInput {
 
     @IsEnum(GravidadeOcorrencia, { message: 'Gravidade inválida' })
     gravidade: GravidadeOcorrencia
+
+    @IsOptional()
+    @IsString()
+    @MaxLength(MENSAGEM_OCORRENCIA_MAX_CARACTERES, {
+        message: `A mensagem deve ter no máximo ${MENSAGEM_OCORRENCIA_MAX_CARACTERES} caracteres`
+    })
+    mensagem?: string
 }

@@ -101,6 +101,7 @@ function ExcluirPage() {
                                     situacaoAtual={registro.situacaoAtual}
                                     faixaValor={registro.faixaValor}
                                     gravidade={registro.gravidade}
+                                    mensagem={registro.mensagem}
                                     acoes={
                                         <Button
                                             variant="ghost"

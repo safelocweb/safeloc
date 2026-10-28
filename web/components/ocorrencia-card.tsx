@@ -1,4 +1,4 @@
-import { Clock } from 'lucide-react'
+import { Clock, MessageSquareText } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import {
@@ -23,6 +23,7 @@ interface OcorrenciaCardProps {
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
     gravidade?: GravidadeOcorrencia
+    mensagem?: string | null
     badgesExtras?: React.ReactNode
     acoes?: React.ReactNode
     esmaecido?: boolean
@@ -37,6 +38,7 @@ export function OcorrenciaCard({
     situacaoAtual,
     faixaValor,
     gravidade,
+    mensagem,
     badgesExtras,
     acoes,
     esmaecido = false,
@@ -78,6 +80,12 @@ export function OcorrenciaCard({
                         <Badge variant="outline">{SITUACAO_OCORRENCIA_LABEL[situacaoAtual]}</Badge>
                         {badgesExtras}
                     </div>
+                    {mensagem && (
+                        <p className="mt-3 flex items-start gap-2 rounded-lg border border-border bg-muted/50 px-3 py-2 text-sm text-foreground/90">
+                            <MessageSquareText className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                            <span className="break-words">{mensagem}</span>
+                        </p>
+                    )}
                     {children && <div className="mt-3">{children}</div>}
                 </div>
             </div>

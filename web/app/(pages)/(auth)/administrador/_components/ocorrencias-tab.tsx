@@ -151,6 +151,7 @@ export function OcorrenciasTab() {
                     dataOcorrencia={ocorrencia.dataOcorrencia}
                     situacaoAtual={ocorrencia.situacaoAtual}
                     faixaValor={ocorrencia.faixaValor}
+                    mensagem={ocorrencia.mensagem}
                     esmaecido={ocorrencia.status === 'EXCLUIDA'}
                     badgesExtras={ocorrencia.status === 'EXCLUIDA' && <Badge variant="outline">Excluída</Badge>}
                 >

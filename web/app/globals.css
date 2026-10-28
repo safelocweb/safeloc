@@ -71,6 +71,16 @@
     * {
         @apply border-border;
     }
+    /*
+     * Escala fluida no desktop: o layout foi desenhado para ~1600x900 (16px). Em telas menores
+     * (ex.: 1366x768) o rem diminui proporcionalmente, como um "zoom out" do navegador, mantendo
+     * tudo visível sem rolagem. Mobile/tablet ficam fora para não reduzir a leitura em telas pequenas.
+     */
+    @media (min-width: 1024px) {
+        html {
+            font-size: clamp(13px, min(1vw, 1.78vh), 16px);
+        }
+    }
     body {
         @apply bg-background text-foreground;
         background-image:
