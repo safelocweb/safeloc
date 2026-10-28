@@ -37,7 +37,7 @@ export default function AdministradorPage() {
 
     return (
         <div className="flex min-h-full flex-col gap-6 md:h-full md:min-h-0">
-            <div className="shrink-0">
+            <div className="shrink-0 rounded-xl border border-border bg-card/95 px-5 py-4 shadow-lg shadow-black/10 backdrop-blur">
                 <h1 className="text-2xl font-bold tracking-tight">Administrador</h1>
                 <p className="text-sm text-muted-foreground">
                     Gerencie imobiliárias, usuários de qualquer imobiliária, acompanhe todas as

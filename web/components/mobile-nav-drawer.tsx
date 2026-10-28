@@ -35,12 +35,12 @@ export function MobileNavDrawer({ open, onOpenChange, navItems, nomeUsuario }: M
                 />
                 <DialogPrimitive.Content
                     className={cn(
-                        'fixed inset-y-0 left-0 z-50 flex h-full w-72 max-w-[80vw] flex-col border-r border-border bg-card',
+                        'fixed inset-y-0 left-0 z-50 flex h-full w-72 max-w-[80vw] flex-col bg-sidebar text-sidebar-foreground',
                         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left duration-200'
                     )}
                 >
                     <DialogPrimitive.Title className="sr-only">Menu de navegação</DialogPrimitive.Title>
-                    <div className="flex h-16 shrink-0 items-center gap-2 border-b border-border px-4">
+                    <div className="flex h-16 shrink-0 items-center gap-2 border-b border-sidebar-accent px-4">
                         <Image
                             src="/logo.png"
                             alt="Safeloc"
@@ -65,8 +65,8 @@ export function MobileNavDrawer({ open, onOpenChange, navItems, nomeUsuario }: M
                                     className={cn(
                                         'flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm font-medium transition-colors',
                                         ativo
-                                            ? 'bg-primary text-primary-foreground'
-                                            : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                                            ? 'bg-primary font-semibold text-primary-foreground'
+                                            : 'text-sidebar-foreground/85 hover:bg-sidebar-accent hover:text-sidebar-foreground'
                                     )}
                                 >
                                     <Icon className="h-4 w-4 shrink-0" />
@@ -76,9 +76,9 @@ export function MobileNavDrawer({ open, onOpenChange, navItems, nomeUsuario }: M
                         })}
                     </nav>
 
-                    <div className="shrink-0 border-t border-border px-4 py-4 text-center">
-                        <p className="truncate text-sm font-medium text-foreground">{nomeUsuario}</p>
-                        <p className="mt-1.5 text-xs text-muted-foreground">v{APP_VERSION}</p>
+                    <div className="shrink-0 border-t border-sidebar-accent px-4 py-4 text-center">
+                        <p className="truncate text-sm font-medium">{nomeUsuario}</p>
+                        <p className="mt-1.5 text-xs text-sidebar-muted">v{APP_VERSION}</p>
                     </div>
                 </DialogPrimitive.Content>
             </DialogPrimitive.Portal>

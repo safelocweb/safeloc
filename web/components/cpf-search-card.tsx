@@ -87,7 +87,7 @@ export function CpfSearchCard({
                 </form>
             </CardContent>
 
-            <div className="flex items-start gap-2 rounded-b-lg border-t border-border bg-muted/40 px-6 py-3">
+            <div className="flex items-start gap-2 rounded-b-xl border-t border-border bg-muted/40 px-6 py-3">
                 <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                 <p className="text-[11px] leading-relaxed text-muted-foreground">
                     A consulta somente poderá ser realizada para fins de análise locatícia legítima, sendo vedada

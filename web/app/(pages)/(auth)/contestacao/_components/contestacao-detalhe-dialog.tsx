@@ -64,6 +64,7 @@ export function ContestacaoDetalheDialog({
             setObservacao('')
             queryClient.invalidateQueries({ queryKey: ['contestacao-detalhe', contestacaoId] })
             queryClient.invalidateQueries({ queryKey: ['contestacoes'] })
+            onOpenChange(false)
         },
         onError: (error) => {
             toast.error(getErrorMessage(error, 'Não foi possível registrar a decisão.'))

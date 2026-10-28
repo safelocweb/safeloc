@@ -50,13 +50,13 @@ function StatCard({
 }) {
     return (
         <Card className="overflow-hidden border-border/70 bg-card/95 shadow-sm transition-shadow hover:shadow-md">
-            <CardContent className="flex items-center gap-3 p-4">
+            <CardContent className="flex items-center gap-3 px-4 py-3">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Icon className="h-4 w-4" />
                 </span>
                 <div className="min-w-0">
                     <p className="text-xs leading-tight text-muted-foreground">{label}</p>
-                    <p className="text-2xl font-bold tabular-nums text-foreground">
+                    <p className="text-xl font-bold tabular-nums text-foreground">
                         {value.toLocaleString('pt-BR')}
                     </p>
                 </div>
@@ -67,16 +67,16 @@ function StatCard({
 
 function DashboardSkeleton() {
     return (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <Skeleton className="h-[76px] w-full" />
-                <Skeleton className="h-[76px] w-full" />
-                <Skeleton className="h-[76px] w-full" />
+                <Skeleton className="h-[68px] w-full" />
+                <Skeleton className="h-[68px] w-full" />
+                <Skeleton className="h-[68px] w-full" />
             </div>
-            <Skeleton className="h-60 w-full" />
+            <Skeleton className="h-56 w-full" />
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                <Skeleton className="h-48 w-full lg:col-span-2" />
-                <Skeleton className="h-48 w-full" />
+                <Skeleton className="h-56 w-full lg:col-span-2" />
+                <Skeleton className="h-56 w-full" />
             </div>
         </div>
     )
@@ -112,14 +112,16 @@ function DashboardPage() {
     }))
 
     return (
-        <div className="flex flex-col gap-6">
-            <div className="relative overflow-hidden rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/15 via-card to-blue-500/10 p-6 shadow-sm">
-                <div className="absolute -right-10 -top-14 h-44 w-44 rounded-full bg-primary/15 blur-3xl" />
-                <div className="relative">
-                    <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-primary"><TrendingUp className="h-4 w-4" />Painel estratégico</div>
-                    <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Visão geral da sua operação</h1>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                    Visão geral dos registros e consultas da sua imobiliária
+        <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-4 rounded-xl border border-border border-l-4 border-l-primary bg-card px-5 py-4 shadow-lg shadow-black/10">
+                <span className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary sm:flex">
+                    <TrendingUp className="h-5 w-5" />
+                </span>
+                <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">Painel estratégico</p>
+                    <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Visão geral da sua operação</h1>
+                    <p className="text-sm text-muted-foreground">
+                        Visão geral dos registros e consultas da sua imobiliária
                     </p>
                 </div>
             </div>
@@ -131,15 +133,15 @@ function DashboardPage() {
             </div>
 
             <Card className="overflow-hidden border-border/70 bg-card/95 shadow-sm">
-                <CardHeader className="px-6 py-4">
+                <CardHeader className="px-6 py-3">
                     <CardTitle>Registros da sua imobiliária</CardTitle>
                     <CardDescription>Ocorrências inseridas nos últimos 6 meses</CardDescription>
                 </CardHeader>
-                <CardContent className="h-52 pt-0 sm:h-60">
+                <CardContent className="h-40 pb-4 pt-0 sm:h-44">
                     <ResponsiveContainer width="100%" height="100%">
                         <AreaChart
                             data={resumo.serieMensalImobiliaria}
-                            margin={{ top: 16, right: 16, bottom: 0, left: -16 }}
+                            margin={{ top: 8, right: 16, bottom: 0, left: -16 }}
                         >
                             <CartesianGrid vertical={false} stroke="var(--chart-grid)" />
                             <XAxis
@@ -207,15 +209,15 @@ function DashboardPage() {
                 </CardContent>
             </Card>
 
-            <div className="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                 <Card className="flex flex-col border-border/70 bg-card/95 shadow-sm">
-                    <CardHeader className="px-6 py-4">
+                    <CardHeader className="px-6 py-3">
                         <CardTitle>Distribuição por gravidade</CardTitle>
                         <CardDescription>Ocorrências ativas da sua imobiliária, por gravidade</CardDescription>
                     </CardHeader>
-                    <CardContent className="flex min-h-64 flex-1 items-center justify-center pt-0">
+                    <CardContent className="flex h-44 items-center justify-center pb-4 pt-0">
                         {totalGravidade === 0 ? (
-                            <div className="flex flex-col items-center justify-center gap-3 py-10">
+                            <div className="flex h-full flex-col items-center justify-center gap-3">
                                 <span className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
                                     <Gauge className="h-7 w-7 text-muted-foreground" />
                                 </span>
@@ -230,13 +232,13 @@ function DashboardPage() {
                 </Card>
 
                 <Card className="flex flex-col border-border/70 bg-card/95 shadow-sm">
-                    <CardHeader className="px-6 py-4">
+                    <CardHeader className="px-6 py-3">
                         <CardTitle>Contestações por status</CardTitle>
                         <CardDescription>Total: {totalContestacoes.toLocaleString('pt-BR')}</CardDescription>
                     </CardHeader>
-                    <CardContent className="min-h-64 pt-0">
+                    <CardContent className="h-44 pb-4 pt-0">
                         {totalContestacoes === 0 ? (
-                            <div className="flex flex-col items-center justify-center gap-3 py-10">
+                            <div className="flex h-full flex-col items-center justify-center gap-3">
                                 <span className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
                                     <MessageSquareWarning className="h-7 w-7 text-muted-foreground" />
                                 </span>

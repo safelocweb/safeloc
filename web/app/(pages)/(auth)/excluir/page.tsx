@@ -1,26 +1,20 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { Clock, FolderOpen, Inbox, Trash2 } from 'lucide-react'
+import { FolderOpen, Inbox, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { RequirePapelAdmin } from '@/components/require-papel-admin'
-import { Badge } from '@/components/ui/badge'
+import { OcorrenciaCard } from '@/components/ocorrencia-card'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { CpfSearchCard } from '@/components/cpf-search-card'
+import { RolagemComIndicadores } from '@/components/rolagem-com-indicadores'
 import { getErrorMessage } from '@/lib/get-error-message'
 import { useDelayedLoading } from '@/lib/use-delayed-loading'
 import { ocorrenciaService, OcorrenciaExcluivel } from '@/app/services/ocorrencia.service'
-import {
-    TIPO_OCORRENCIA_ICON,
-    TIPO_OCORRENCIA_ICON_PADRAO,
-    TIPO_OCORRENCIA_LABEL
-} from '@/shared/constants/tipo-ocorrencia'
-import { SITUACAO_OCORRENCIA_LABEL } from '@/shared/constants/situacao-ocorrencia'
-import { FAIXA_VALOR_OCORRENCIA_LABEL } from '@/shared/constants/faixa-valor-ocorrencia'
-import { GRAVIDADE_OCORRENCIA_BADGE_CLASS, GRAVIDADE_OCORRENCIA_LABEL } from '@/shared/constants/gravidade-ocorrencia'
+import { TIPO_OCORRENCIA_LABEL } from '@/shared/constants/tipo-ocorrencia'
 
 function ExcluirPage() {
     const [registros, setRegistros] = useState<OcorrenciaExcluivel[] | null>(null)
@@ -93,61 +87,36 @@ function ExcluirPage() {
                     )}
 
                     {registros.length > 0 && (
-                        <div className="flex-1 md:min-h-0">
-                            <CardContent className="flex flex-col md:h-full md:min-h-0 md:overflow-y-auto">
-                                <ul className="flex flex-col gap-4 pb-6">
-                                {registros.map((registro) => {
-                                    const Icon = TIPO_OCORRENCIA_ICON[registro.tipo] ?? TIPO_OCORRENCIA_ICON_PADRAO
-                                    return (
-                                        <li
-                                            key={registro.id}
-                                            className="rounded-xl border border-border bg-card p-5 shadow-sm transition-shadow hover:shadow-md"
+                        <RolagemComIndicadores
+                            rotuloAbaixo="Há mais registros abaixo"
+                            className="flex flex-col p-6 pt-0 md:h-full md:min-h-0 md:overflow-y-auto"
+                        >
+                            <ul className="flex flex-col gap-4 pb-6">
+                            {registros.map((registro) => (
+                                <OcorrenciaCard
+                                    key={registro.id}
+                                    as="li"
+                                    tipo={registro.tipo}
+                                    dataOcorrencia={registro.dataOcorrencia}
+                                    situacaoAtual={registro.situacaoAtual}
+                                    faixaValor={registro.faixaValor}
+                                    gravidade={registro.gravidade}
+                                    acoes={
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="h-7 w-7 shrink-0 p-0 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                                            onClick={() => setRegistroParaExcluir(registro)}
+                                            aria-label="Excluir registro"
+                                            title="Excluir registro"
                                         >
-                                            <div className="flex flex-wrap items-center justify-between gap-2">
-                                                <div className="flex items-center gap-3">
-                                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-destructive/10 text-destructive">
-                                                        <Icon className="h-4 w-4" />
-                                                    </span>
-                                                    <Badge variant="secondary">
-                                                        {TIPO_OCORRENCIA_LABEL[registro.tipo] ?? registro.tipo}
-                                                    </Badge>
-                                                </div>
-                                                <div className="flex items-center gap-1">
-                                                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                                                        <Clock className="h-3 w-3" />
-                                                        {new Date(registro.dataOcorrencia).toLocaleDateString('pt-BR')}
-                                                    </span>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        className="h-7 w-7 shrink-0 p-0 text-destructive hover:bg-destructive/10 hover:text-destructive"
-                                                        onClick={() => setRegistroParaExcluir(registro)}
-                                                        aria-label="Excluir registro"
-                                                        title="Excluir registro"
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
-                                                </div>
-                                            </div>
-                                            <div className="pl-11">
-                                                <div className="mt-2 flex flex-wrap gap-1.5">
-                                                    <Badge className={GRAVIDADE_OCORRENCIA_BADGE_CLASS[registro.gravidade]}>
-                                                        {GRAVIDADE_OCORRENCIA_LABEL[registro.gravidade]}
-                                                    </Badge>
-                                                    <Badge variant="outline">
-                                                        {SITUACAO_OCORRENCIA_LABEL[registro.situacaoAtual]}
-                                                    </Badge>
-                                                    <Badge variant="outline">
-                                                        {FAIXA_VALOR_OCORRENCIA_LABEL[registro.faixaValor]}
-                                                    </Badge>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    )
-                                })}
-                                </ul>
-                            </CardContent>
-                        </div>
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    }
+                                />
+                            ))}
+                            </ul>
+                        </RolagemComIndicadores>
                     )}
                 </Card>
             ) : (

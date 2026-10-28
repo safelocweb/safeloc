@@ -43,7 +43,14 @@ const config: Config = {
                 },
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
-                ring: 'hsl(var(--ring))'
+                ring: 'hsl(var(--ring))',
+                topbar: 'hsl(var(--topbar))',
+                sidebar: {
+                    DEFAULT: 'hsl(var(--sidebar))',
+                    foreground: 'hsl(var(--sidebar-foreground))',
+                    muted: 'hsl(var(--sidebar-muted))',
+                    accent: 'hsl(var(--sidebar-accent))'
+                }
             },
             borderRadius: {
                 lg: 'var(--radius)',

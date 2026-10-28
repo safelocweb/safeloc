@@ -39,6 +39,7 @@ enum FaixaValorOcorrencia {
     ATE_1_MIL
     DE_1_MIL_A_2_MIL
     DE_2_MIL_A_5_MIL
+    DE_5_MIL_A_10_MIL
     ACIMA_10_MIL
 }
 

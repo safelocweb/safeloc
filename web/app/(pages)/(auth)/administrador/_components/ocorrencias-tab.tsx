@@ -1,9 +1,10 @@
 'use client'
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { Building2, Clock, FileSearch, User } from 'lucide-react'
+import { Building2, FileSearch, User } from 'lucide-react'
 import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
+import { OcorrenciaCard } from '@/components/ocorrencia-card'
 import { CpfInput } from '@/components/ui/cpf-input'
 import { ListagemCard } from '@/components/ui/listagem-card'
 import { SearchableSelect } from '@/components/ui/searchable-select'
@@ -12,15 +13,7 @@ import { formatCpf, isCpfComplete } from '@/lib/format-cpf'
 import { useDelayedLoading } from '@/lib/use-delayed-loading'
 import { imobiliariaService } from '@/app/services/imobiliaria.service'
 import { ocorrenciaService } from '@/app/services/ocorrencia.service'
-import {
-    TIPO_OCORRENCIA_ICON,
-    TIPO_OCORRENCIA_ICON_PADRAO,
-    TIPO_OCORRENCIA_LABEL,
-    TIPO_OCORRENCIA_OPTIONS,
-    type TipoOcorrencia
-} from '@/shared/constants/tipo-ocorrencia'
-import { SITUACAO_OCORRENCIA_LABEL } from '@/shared/constants/situacao-ocorrencia'
-import { FAIXA_VALOR_OCORRENCIA_LABEL } from '@/shared/constants/faixa-valor-ocorrencia'
+import { TIPO_OCORRENCIA_OPTIONS, type TipoOcorrencia } from '@/shared/constants/tipo-ocorrencia'
 
 const TODAS_IMOBILIARIAS = 'todas'
 const TODOS_TIPOS = 'todos'
@@ -151,45 +144,31 @@ export function OcorrenciasTab() {
                 </>
             }
         >
-            {resultado?.ocorrencias.map((ocorrencia) => {
-                const Icon = TIPO_OCORRENCIA_ICON[ocorrencia.tipo] ?? TIPO_OCORRENCIA_ICON_PADRAO
-                return (
-                    <div key={ocorrencia.id} className="rounded-xl border border-border bg-card p-5 shadow-sm">
-                        <div className="flex flex-wrap items-center justify-between gap-2">
-                            <div className="flex items-center gap-3">
-                                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-destructive/10 text-destructive">
-                                    <Icon className="h-4 w-4" />
-                                </span>
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <Badge variant="secondary">{TIPO_OCORRENCIA_LABEL[ocorrencia.tipo] ?? ocorrencia.tipo}</Badge>
-                                    <Badge variant="outline">{SITUACAO_OCORRENCIA_LABEL[ocorrencia.situacaoAtual]}</Badge>
-                                    <Badge variant="outline">{FAIXA_VALOR_OCORRENCIA_LABEL[ocorrencia.faixaValor]}</Badge>
-                                    {ocorrencia.status === 'EXCLUIDA' && <Badge variant="outline">Excluída</Badge>}
-                                </div>
-                            </div>
-                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                                <Clock className="h-3 w-3" />
-                                Ocorrido em {new Date(ocorrencia.dataOcorrencia).toLocaleDateString('pt-BR')}
-                            </span>
-                        </div>
-                        <div className="mt-2 pl-11">
-                            <p className="text-sm font-medium">
-                                {formatCpf(ocorrencia.cpfInquilino)} · {ocorrencia.nomeInquilinoInformado}
-                            </p>
-                            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                                <span className="flex items-center gap-1.5">
-                                    <Building2 className="h-3.5 w-3.5" />
-                                    {ocorrencia.imobiliaria.nomeFantasia ?? ocorrencia.imobiliaria.razaoSocial}
-                                </span>
-                                <span className="flex items-center gap-1.5">
-                                    <User className="h-3.5 w-3.5" />
-                                    {ocorrencia.usuario.nomeCompleto} ({ocorrencia.usuario.login})
-                                </span>
-                            </div>
-                        </div>
+            {resultado?.ocorrencias.map((ocorrencia) => (
+                <OcorrenciaCard
+                    key={ocorrencia.id}
+                    tipo={ocorrencia.tipo}
+                    dataOcorrencia={ocorrencia.dataOcorrencia}
+                    situacaoAtual={ocorrencia.situacaoAtual}
+                    faixaValor={ocorrencia.faixaValor}
+                    esmaecido={ocorrencia.status === 'EXCLUIDA'}
+                    badgesExtras={ocorrencia.status === 'EXCLUIDA' && <Badge variant="outline">Excluída</Badge>}
+                >
+                    <p className="text-sm font-medium">
+                        {formatCpf(ocorrencia.cpfInquilino)} · {ocorrencia.nomeInquilinoInformado}
+                    </p>
+                    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1.5">
+                            <Building2 className="h-3.5 w-3.5" />
+                            {ocorrencia.imobiliaria.nomeFantasia ?? ocorrencia.imobiliaria.razaoSocial}
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                            <User className="h-3.5 w-3.5" />
+                            {ocorrencia.usuario.nomeCompleto} ({ocorrencia.usuario.login})
+                        </span>
                     </div>
-                )
-            })}
+                </OcorrenciaCard>
+            ))}
         </ListagemCard>
     )
 }

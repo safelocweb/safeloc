@@ -16,13 +16,18 @@ import { DateInput } from '@/components/ui/date-input'
 import { FloatingField } from '@/components/ui/floating-field'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { cn } from '@/lib/utils'
 import { getErrorMessage } from '@/lib/get-error-message'
 import { isCpfComplete } from '@/lib/format-cpf'
 import { useDelayedLoading } from '@/lib/use-delayed-loading'
 import { ocorrenciaService, OcorrenciaCreateInput } from '@/app/services/ocorrencia.service'
 import { TIPO_OCORRENCIA_OPTIONS } from '@/shared/constants/tipo-ocorrencia'
 import { SITUACAO_OCORRENCIA_OPTIONS } from '@/shared/constants/situacao-ocorrencia'
-import { FAIXA_VALOR_OCORRENCIA_OPTIONS } from '@/shared/constants/faixa-valor-ocorrencia'
+import {
+    FAIXA_VALOR_OCORRENCIA_NIVEL,
+    FAIXA_VALOR_OCORRENCIA_OPTIONS,
+    NIVEL_VALOR_OCORRENCIA
+} from '@/shared/constants/faixa-valor-ocorrencia'
 import { GRAVIDADE_OCORRENCIA_OPTIONS } from '@/shared/constants/gravidade-ocorrencia'
 
 const dataNaoFutura = (valor: string) => new Date(valor) <= new Date()
@@ -271,7 +276,15 @@ function InserirPage() {
                                             <SelectContent>
                                                 {FAIXA_VALOR_OCORRENCIA_OPTIONS.map((option) => (
                                                     <SelectItem key={option.value} value={option.value}>
-                                                        {option.label}
+                                                        <span className="flex items-center gap-2">
+                                                            <span
+                                                                className={cn(
+                                                                    'h-2.5 w-2.5 shrink-0 rounded-full',
+                                                                    NIVEL_VALOR_OCORRENCIA[FAIXA_VALOR_OCORRENCIA_NIVEL[option.value]].dotClass
+                                                                )}
+                                                            />
+                                                            {option.label}
+                                                        </span>
                                                     </SelectItem>
                                                 ))}
                                             </SelectContent>
