@@ -9,6 +9,7 @@ import { CpfSearchCard } from '@/components/cpf-search-card'
 import { RolagemComIndicadores } from '@/components/rolagem-com-indicadores'
 import { OcorrenciaCard } from '@/components/ocorrencia-card'
 import { formatCpf } from '@/lib/format-cpf'
+import { cn } from '@/lib/utils'
 import { getErrorMessage } from '@/lib/get-error-message'
 import { useDelayedLoading } from '@/lib/use-delayed-loading'
 import { ocorrenciaService, ConsultaResult, OcorrenciaDetalhe } from '@/app/services/ocorrencia.service'
@@ -59,19 +60,7 @@ export default function ConsultarPage() {
                     onSubmit={buscar}
                 />
 
-                {resultado?.constamInformacoes && (
-                    <div className="flex items-start gap-3 rounded-xl border border-border border-l-4 border-l-amber-400 bg-card px-4 py-3 shadow-lg shadow-black/10 lg:mt-auto">
-                        <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-                        <div>
-                            <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">
-                                As ocorrências exibidas foram registradas por imobiliárias participantes da plataforma. A
-                                responsabilidade pela veracidade das informações é exclusivamente da imobiliária
-                                registrante. A Safeloc atua apenas como provedora tecnológica e registra todas as
-                                operações realizadas no sistema.
-                            </p>
-                        </div>
-                    </div>
-                )}
+                {resultado?.constamInformacoes && <ObservacaoConsulta className="hidden lg:mt-auto lg:flex" />}
             </div>
 
             {resultado ? (
@@ -93,7 +82,7 @@ export default function ConsultarPage() {
 
                     {resultado.constamInformacoes && (
                         <>
-                            <CardHeader className="shrink-0">
+                            <CardHeader className="shrink-0 p-4 sm:p-6">
                                 <CardTitle>CONSTAM INFORMAÇÕES</CardTitle>
                                 <CardDescription>
                                     CPF {formatCpf(cpfConsultado)}
@@ -102,7 +91,7 @@ export default function ConsultarPage() {
                             </CardHeader>
                             <RolagemComIndicadores
                                 rotuloAbaixo="Há mais ocorrências abaixo"
-                                className="flex flex-col p-6 pt-0 md:h-full md:min-h-0 md:overflow-y-auto"
+                                className="flex flex-col px-3 pb-3 pt-0 sm:px-6 sm:pb-6 md:h-full md:min-h-0 md:overflow-y-auto"
                             >
                                 {!detalhes && (
                                     <div className="flex flex-1 flex-col items-center justify-center gap-3 md:min-h-0">
@@ -114,7 +103,7 @@ export default function ConsultarPage() {
                                 )}
 
                                 {detalhes && (
-                                    <ul className="flex flex-col gap-4 pb-6">
+                                    <ul className="flex flex-col gap-3 sm:gap-4 md:pb-6">
                                         {detalhes.map((ocorrencia) => (
                                             <OcorrenciaCard
                                                 key={ocorrencia.id}
@@ -147,6 +136,26 @@ export default function ConsultarPage() {
                     </p>
                 </Card>
             )}
+
+            {resultado?.constamInformacoes && <ObservacaoConsulta className="lg:hidden" />}
+        </div>
+    )
+}
+
+function ObservacaoConsulta({ className }: { className?: string }) {
+    return (
+        <div
+            className={cn(
+                'flex items-start gap-3 rounded-xl border border-border border-l-4 border-l-amber-400 bg-card px-4 py-3 shadow-lg shadow-black/10',
+                className
+            )}
+        >
+            <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+            <p className="text-[11px] leading-relaxed text-muted-foreground">
+                As ocorrências exibidas foram registradas por imobiliárias participantes da plataforma. A
+                responsabilidade pela veracidade das informações é exclusivamente da imobiliária registrante. A Safeloc
+                atua apenas como provedora tecnológica e registra todas as operações realizadas no sistema.
+            </p>
         </div>
     )
 }

@@ -65,7 +65,7 @@ function ExcluirPage() {
 
             {registros ? (
                 <Card className="flex flex-1 flex-col md:min-h-0 lg:overflow-hidden">
-                    <CardHeader className="shrink-0">
+                    <CardHeader className="shrink-0 p-4 sm:p-6">
                         <CardTitle>
                             {registros.length === 0
                                 ? 'Nenhum registro administrável por sua imobiliária'
@@ -89,9 +89,9 @@ function ExcluirPage() {
                     {registros.length > 0 && (
                         <RolagemComIndicadores
                             rotuloAbaixo="Há mais registros abaixo"
-                            className="flex flex-col p-6 pt-0 md:h-full md:min-h-0 md:overflow-y-auto"
+                            className="flex flex-col px-3 pb-3 pt-0 sm:px-6 sm:pb-6 md:h-full md:min-h-0 md:overflow-y-auto"
                         >
-                            <ul className="flex flex-col gap-4 pb-6">
+                            <ul className="flex flex-col gap-3 sm:gap-4 md:pb-6">
                             {registros.map((registro) => (
                                 <OcorrenciaCard
                                     key={registro.id}

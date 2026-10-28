@@ -54,23 +54,21 @@ export function OcorrenciaCard({
         >
             <span aria-hidden className={cn('absolute inset-y-0 left-0 w-1.5', nivel.dotClass)} />
 
-            <div className="min-w-0 flex-1 py-5 pl-6 pr-5">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div className="flex items-center gap-3">
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
-                            <Icon className="h-4 w-4" />
-                        </span>
-                        <span className="font-semibold">{TIPO_OCORRENCIA_LABEL[tipo] ?? tipo}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                        <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <Clock className="h-3 w-3" />
-                            Ocorrido em {new Date(dataOcorrencia).toLocaleDateString('pt-BR')}
-                        </span>
+            <div className="flex min-w-0 flex-1 gap-3 py-4 pl-5 pr-4 sm:py-5 sm:pl-6 sm:pr-5">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                    <Icon className="h-4 w-4" />
+                </span>
+                <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-2">
+                        <div className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
+                            <p className="font-semibold leading-snug sm:pt-0.5">{TIPO_OCORRENCIA_LABEL[tipo] ?? tipo}</p>
+                            <span className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
+                                <Clock className="h-3 w-3" />
+                                Ocorrido em {new Date(dataOcorrencia).toLocaleDateString('pt-BR')}
+                            </span>
+                        </div>
                         {acoes}
                     </div>
-                </div>
-                <div className="pl-11">
                     <div className="mt-2 flex flex-wrap gap-1.5">
                         {gravidade && (
                             <Badge className={GRAVIDADE_OCORRENCIA_BADGE_CLASS[gravidade]}>
@@ -86,19 +84,22 @@ export function OcorrenciaCard({
 
             <div
                 className={cn(
-                    'flex shrink-0 flex-col justify-center gap-1 border-t border-border py-4 pl-6 pr-5 sm:w-60 sm:border-l sm:border-t-0 sm:pl-5',
+                    'flex shrink-0 items-center justify-between gap-3 border-t border-border py-3 pl-5 pr-4',
+                    'sm:w-60 sm:flex-col sm:items-start sm:justify-center sm:gap-1 sm:border-l sm:border-t-0 sm:py-4 sm:pl-5 sm:pr-5',
                     nivel.softClass
                 )}
             >
-                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                    Valor envolvido
-                </p>
-                <p className={cn('text-base font-bold leading-tight', nivel.textClass)}>
-                    {FAIXA_VALOR_OCORRENCIA_LABEL[faixaValor]}
-                </p>
+                <div className="min-w-0">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                        Valor envolvido
+                    </p>
+                    <p className={cn('text-sm font-bold leading-tight sm:text-base', nivel.textClass)}>
+                        {FAIXA_VALOR_OCORRENCIA_LABEL[faixaValor]}
+                    </p>
+                </div>
                 <span
                     className={cn(
-                        'mt-1 inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide',
+                        'inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide sm:mt-1 sm:text-[11px]',
                         nivel.badgeClass
                     )}
                 >
