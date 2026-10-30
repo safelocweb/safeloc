@@ -31,9 +31,9 @@ import {
 } from '@/shared/constants/tipo-ocorrencia'
 import { SITUACAO_OCORRENCIA_OPTIONS } from '@/shared/constants/situacao-ocorrencia'
 import {
-    FAIXA_VALOR_OCORRENCIA_NIVEL,
+    FAIXA_VALOR_RISCO_LOCACAO,
     FAIXA_VALOR_OCORRENCIA_OPTIONS,
-    NIVEL_VALOR_OCORRENCIA
+    RISCO_LOCACAO
 } from '@/shared/constants/faixa-valor-ocorrencia'
 import { GRAVIDADE_OCORRENCIA_OPTIONS } from '@/shared/constants/gravidade-ocorrencia'
 
@@ -293,7 +293,7 @@ function InserirPage() {
                                                             <span
                                                                 className={cn(
                                                                     'h-2.5 w-2.5 shrink-0 rounded-full',
-                                                                    NIVEL_VALOR_OCORRENCIA[FAIXA_VALOR_OCORRENCIA_NIVEL[option.value]].dotClass
+                                                                    RISCO_LOCACAO[FAIXA_VALOR_RISCO_LOCACAO[option.value]].dotClass
                                                                 )}
                                                             />
                                                             {option.label}
