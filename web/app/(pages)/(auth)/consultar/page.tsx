@@ -108,7 +108,7 @@ export default function ConsultarPage() {
                                             <OcorrenciaCard
                                                 key={ocorrencia.id}
                                                 as="li"
-                                                tipo={ocorrencia.tipo}
+                                                tipos={ocorrencia.tipos}
                                                 dataOcorrencia={ocorrencia.dataOcorrencia}
                                                 situacaoAtual={ocorrencia.situacaoAtual}
                                                 faixaValor={ocorrencia.faixaValor}

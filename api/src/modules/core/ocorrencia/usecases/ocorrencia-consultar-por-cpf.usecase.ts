@@ -18,7 +18,7 @@ export class OcorrenciaConsultarPorCpfUsecase {
 
         const ocorrencias = await prisma.ocorrencia.findMany({
             where: { cpfInquilino: cpf, status: 'ATIVA' },
-            select: { tipo: true }
+            select: { tipos: true }
         })
 
         await this.auditLogService.record({
@@ -30,7 +30,7 @@ export class OcorrenciaConsultarPorCpfUsecase {
 
         return {
             constamInformacoes: ocorrencias.length > 0,
-            tipos: [...new Set(ocorrencias.map((o) => o.tipo))]
+            tipos: [...new Set(ocorrencias.flatMap((o) => o.tipos))]
         }
     }
 }

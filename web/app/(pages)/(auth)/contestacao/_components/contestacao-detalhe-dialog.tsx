@@ -14,7 +14,7 @@ import { getErrorMessage } from '@/lib/get-error-message'
 import { useDelayedLoading } from '@/lib/use-delayed-loading'
 import { UsuarioLogado } from '@/app/services/auth.service'
 import { contestacaoService } from '@/app/services/contestacao.service'
-import { TIPO_OCORRENCIA_LABEL } from '@/shared/constants/tipo-ocorrencia'
+import { formatarTiposOcorrencia } from '@/shared/constants/tipo-ocorrencia'
 import { ContestacaoStatusBadge } from './contestacao-status-badge'
 
 function formatarTamanho(bytes: number): string {
@@ -118,7 +118,7 @@ export function ContestacaoDetalheDialog({
                                     {contestacao.ocorrencia.nomeInquilinoInformado}
                                 </p>
                                 <p className="mt-1 text-xs text-muted-foreground">
-                                    {TIPO_OCORRENCIA_LABEL[contestacao.ocorrencia.tipo]} ·{' '}
+                                    {formatarTiposOcorrencia(contestacao.ocorrencia.tipos)} ·{' '}
                                     {contestacao.imobiliaria.nomeFantasia ?? contestacao.imobiliaria.razaoSocial}
                                 </p>
                             </div>

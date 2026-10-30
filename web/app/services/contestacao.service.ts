@@ -6,7 +6,7 @@ export interface ContestacaoOcorrenciaResumo {
     id: number
     cpfInquilino: string
     nomeInquilinoInformado: string
-    tipo: TipoOcorrencia
+    tipos: TipoOcorrencia[]
 }
 
 export interface ContestacaoImobiliariaResumo {

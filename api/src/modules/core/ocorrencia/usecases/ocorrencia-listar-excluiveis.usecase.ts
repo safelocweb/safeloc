@@ -12,7 +12,7 @@ export class OcorrenciaListarExcluiveisUsecase {
             select: {
                 id: true,
                 nomeInquilinoInformado: true,
-                tipo: true,
+                tipos: true,
                 dataOcorrencia: true,
                 situacaoAtual: true,
                 faixaValor: true,

@@ -23,7 +23,7 @@ export class ContestacaoDetalharUsecase {
                         id: true,
                         cpfInquilino: true,
                         nomeInquilinoInformado: true,
-                        tipo: true
+                        tipos: true
                     }
                 },
                 imobiliaria: { select: { id: true, nomeFantasia: true, razaoSocial: true } },

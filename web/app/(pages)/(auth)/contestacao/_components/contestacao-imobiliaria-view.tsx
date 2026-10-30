@@ -13,7 +13,7 @@ import { useUser } from '@/app/providers/user-provider'
 import { contestacaoService } from '@/app/services/contestacao.service'
 import { ROUTES } from '@/shared/enums/routes.enum'
 import { StatusContestacao } from '@/shared/constants/status-contestacao'
-import { TIPO_OCORRENCIA_LABEL } from '@/shared/constants/tipo-ocorrencia'
+import { formatarTiposOcorrencia } from '@/shared/constants/tipo-ocorrencia'
 import { ContestacaoDetalheDialog } from './contestacao-detalhe-dialog'
 import { ContestacaoStatusBadge } from './contestacao-status-badge'
 
@@ -130,7 +130,7 @@ export function ContestacaoImobiliariaView({ contestacaoIdParaAbrir }: { contest
                             <ContestacaoStatusBadge status={contestacao.status} />
                         </div>
                         <p className="text-xs text-muted-foreground">
-                            {TIPO_OCORRENCIA_LABEL[contestacao.ocorrencia.tipo]}
+                            {formatarTiposOcorrencia(contestacao.ocorrencia.tipos)}
                         </p>
                         <p className="line-clamp-2 text-sm text-muted-foreground">{contestacao.motivoConsumidor}</p>
                         <p className="text-xs text-muted-foreground">

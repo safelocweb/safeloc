@@ -11,7 +11,7 @@ export class OcorrenciaDetalharPorCpfUsecase {
             where: { cpfInquilino: cpf, status: 'ATIVA' },
             select: {
                 id: true,
-                tipo: true,
+                tipos: true,
                 dataOcorrencia: true,
                 situacaoAtual: true,
                 faixaValor: true,

@@ -14,7 +14,7 @@ import { RolagemComIndicadores } from '@/components/rolagem-com-indicadores'
 import { getErrorMessage } from '@/lib/get-error-message'
 import { useDelayedLoading } from '@/lib/use-delayed-loading'
 import { ocorrenciaService, OcorrenciaExcluivel } from '@/app/services/ocorrencia.service'
-import { TIPO_OCORRENCIA_LABEL } from '@/shared/constants/tipo-ocorrencia'
+import { formatarTiposOcorrencia } from '@/shared/constants/tipo-ocorrencia'
 
 function ExcluirPage() {
     const [registros, setRegistros] = useState<OcorrenciaExcluivel[] | null>(null)
@@ -96,7 +96,7 @@ function ExcluirPage() {
                                 <OcorrenciaCard
                                     key={registro.id}
                                     as="li"
-                                    tipo={registro.tipo}
+                                    tipos={registro.tipos}
                                     dataOcorrencia={registro.dataOcorrencia}
                                     situacaoAtual={registro.situacaoAtual}
                                     faixaValor={registro.faixaValor}
@@ -137,7 +137,7 @@ function ExcluirPage() {
                 title="Excluir este registro?"
                 description={
                     registroParaExcluir
-                        ? `A ocorrência de "${TIPO_OCORRENCIA_LABEL[registroParaExcluir.tipo] ?? registroParaExcluir.tipo}" será excluída. Essa ação não pode ser desfeita.`
+                        ? `A ocorrência de "${formatarTiposOcorrencia(registroParaExcluir.tipos)}" será excluída. Essa ação não pode ser desfeita.`
                         : undefined
                 }
                 confirmLabel="Sim, excluir"

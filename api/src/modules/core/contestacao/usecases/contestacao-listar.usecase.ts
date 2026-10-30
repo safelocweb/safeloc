@@ -44,7 +44,7 @@ export class ContestacaoListarUsecase {
                     decisaoObservacao: true,
                     createdAt: true,
                     ocorrencia: {
-                        select: { id: true, cpfInquilino: true, nomeInquilinoInformado: true, tipo: true }
+                        select: { id: true, cpfInquilino: true, nomeInquilinoInformado: true, tipos: true }
                     },
                     imobiliaria: { select: { id: true, nomeFantasia: true, razaoSocial: true } },
                     _count: { select: { documentos: true } }

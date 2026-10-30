@@ -1,4 +1,4 @@
-import { IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator'
+import { ArrayMinSize, ArrayUnique, IsArray, IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator'
 import { FaixaValorOcorrencia, GravidadeOcorrencia, SituacaoOcorrencia, TipoOcorrencia } from '@prisma/client'
 import { MENSAGEM_OCORRENCIA_MAX_CARACTERES } from './mensagem-ocorrencia'
 
@@ -14,8 +14,11 @@ export class OcorrenciaCreateInput {
     @IsDateString({}, { message: 'Data de nascimento inválida' })
     dataNascimentoInquilino: string
 
-    @IsEnum(TipoOcorrencia, { message: 'Tipo de ocorrência inválido' })
-    tipo: TipoOcorrencia
+    @IsArray({ message: 'Os tipos de ocorrência devem ser uma lista' })
+    @ArrayMinSize(1, { message: 'Selecione ao menos um tipo de ocorrência' })
+    @ArrayUnique({ message: 'Tipos de ocorrência duplicados' })
+    @IsEnum(TipoOcorrencia, { each: true, message: 'Tipo de ocorrência inválido' })
+    tipos: TipoOcorrencia[]
 
     @IsDateString({}, { message: 'Data da ocorrência inválida' })
     dataOcorrencia: string

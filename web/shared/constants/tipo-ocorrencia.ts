@@ -55,7 +55,7 @@ export const TIPO_OCORRENCIA_ICON_PADRAO: LucideIcon = CircleHelp
 
 export const MENSAGEM_OCORRENCIA_MAX_CARACTERES = 120
 
-// Só esses tipos liberam o campo mensagem (mesma regra validada na API)
+// Só esses tipos liberam o campo mensagem — basta um deles estar selecionado (mesma regra validada na API)
 export const TIPOS_OCORRENCIA_COM_MENSAGEM: readonly TipoOcorrencia[] = [
     'ABANDONO_IMOVEL',
     'DANOS_MOBILIA',
@@ -64,6 +64,10 @@ export const TIPOS_OCORRENCIA_COM_MENSAGEM: readonly TipoOcorrencia[] = [
     'PERTURBACAO_SOSSEGO'
 ]
 
-export function tipoPermiteMensagem(tipo: string): boolean {
-    return TIPOS_OCORRENCIA_COM_MENSAGEM.some((tipoComMensagem) => tipoComMensagem === tipo)
+export function tiposPermitemMensagem(tipos: readonly string[]): boolean {
+    return TIPOS_OCORRENCIA_COM_MENSAGEM.some((tipoComMensagem) => tipos.includes(tipoComMensagem))
+}
+
+export function formatarTiposOcorrencia(tipos: readonly string[]): string {
+    return tipos.map((tipo) => TIPO_OCORRENCIA_LABEL[tipo] ?? tipo).join(', ')
 }

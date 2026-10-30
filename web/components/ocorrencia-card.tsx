@@ -1,4 +1,4 @@
-import { Clock, MessageSquareText } from 'lucide-react'
+import { Clock, Layers, MessageSquareText } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import {
@@ -12,13 +12,13 @@ import { SITUACAO_OCORRENCIA_LABEL, SituacaoOcorrencia } from '@/shared/constant
 import {
     TIPO_OCORRENCIA_ICON,
     TIPO_OCORRENCIA_ICON_PADRAO,
-    TIPO_OCORRENCIA_LABEL,
-    TipoOcorrencia
+    TipoOcorrencia,
+    formatarTiposOcorrencia
 } from '@/shared/constants/tipo-ocorrencia'
 
 interface OcorrenciaCardProps {
     as?: 'li' | 'div'
-    tipo: TipoOcorrencia
+    tipos: TipoOcorrencia[]
     dataOcorrencia: string
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
@@ -33,7 +33,7 @@ interface OcorrenciaCardProps {
 // Card padrão de ocorrência: faixa lateral e bloco de valor sempre na cor do nível da faixa de valor
 export function OcorrenciaCard({
     as: Componente = 'div',
-    tipo,
+    tipos,
     dataOcorrencia,
     situacaoAtual,
     faixaValor,
@@ -44,7 +44,7 @@ export function OcorrenciaCard({
     esmaecido = false,
     children
 }: OcorrenciaCardProps) {
-    const Icon = TIPO_OCORRENCIA_ICON[tipo] ?? TIPO_OCORRENCIA_ICON_PADRAO
+    const Icon = tipos.length > 1 ? Layers : (TIPO_OCORRENCIA_ICON[tipos[0]] ?? TIPO_OCORRENCIA_ICON_PADRAO)
     const nivel = NIVEL_VALOR_OCORRENCIA[FAIXA_VALOR_OCORRENCIA_NIVEL[faixaValor]]
 
     return (
@@ -63,7 +63,7 @@ export function OcorrenciaCard({
                 <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-2">
                         <div className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
-                            <p className="font-semibold leading-snug sm:pt-0.5">{TIPO_OCORRENCIA_LABEL[tipo] ?? tipo}</p>
+                            <p className="font-semibold leading-snug sm:pt-0.5">{formatarTiposOcorrencia(tipos)}</p>
                             <span className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
                                 <Clock className="h-3 w-3" />
                                 Ocorrido em {new Date(dataOcorrencia).toLocaleDateString('pt-BR')}

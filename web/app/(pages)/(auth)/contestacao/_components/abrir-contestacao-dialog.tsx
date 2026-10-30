@@ -13,7 +13,7 @@ import { getErrorMessage } from '@/lib/get-error-message'
 import { useDelayedLoading } from '@/lib/use-delayed-loading'
 import { ocorrenciaService } from '@/app/services/ocorrencia.service'
 import { contestacaoService } from '@/app/services/contestacao.service'
-import { TIPO_OCORRENCIA_LABEL } from '@/shared/constants/tipo-ocorrencia'
+import { formatarTiposOcorrencia } from '@/shared/constants/tipo-ocorrencia'
 import { cn } from '@/lib/utils'
 
 export function AbrirContestacaoDialog({
@@ -106,7 +106,7 @@ export function AbrirContestacaoDialog({
                                             )}
                                         >
                                             <span className="font-medium">
-                                                {TIPO_OCORRENCIA_LABEL[ocorrencia.tipo]} ·{' '}
+                                                {formatarTiposOcorrencia(ocorrencia.tipos)} ·{' '}
                                                 {formatCpf(ocorrencia.cpfInquilino)}
                                             </span>
                                             <span className="text-xs text-muted-foreground">

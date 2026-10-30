@@ -3,7 +3,7 @@ model Ocorrencia {
     cpfInquilino            String
     nomeInquilinoInformado  String
     dataNascimentoInquilino DateTime
-    tipo                    TipoOcorrencia
+    tipos                   TipoOcorrencia[]
     dataOcorrencia          DateTime
     situacaoAtual           SituacaoOcorrencia
     faixaValor              FaixaValorOcorrencia

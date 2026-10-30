@@ -16,6 +16,7 @@ import { DateInput } from '@/components/ui/date-input'
 import { FloatingField } from '@/components/ui/floating-field'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { MultiSelect } from '@/components/ui/multi-select'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
@@ -26,7 +27,7 @@ import { ocorrenciaService, OcorrenciaCreateInput } from '@/app/services/ocorren
 import {
     MENSAGEM_OCORRENCIA_MAX_CARACTERES,
     TIPO_OCORRENCIA_OPTIONS,
-    tipoPermiteMensagem
+    tiposPermitemMensagem
 } from '@/shared/constants/tipo-ocorrencia'
 import { SITUACAO_OCORRENCIA_OPTIONS } from '@/shared/constants/situacao-ocorrencia'
 import {
@@ -45,7 +46,7 @@ const inserirSchema = z.object({
         .string()
         .min(1, 'Informe a data de nascimento')
         .refine(dataNaoFutura, 'Data de nascimento não pode ser no futuro'),
-    tipo: z.string().min(1, 'Selecione o tipo de ocorrência'),
+    tipos: z.array(z.string()).min(1, 'Selecione ao menos um tipo de ocorrência'),
     dataOcorrencia: z
         .string()
         .min(1, 'Informe a data da ocorrência')
@@ -97,7 +98,7 @@ function InserirPage() {
             nomeInquilinoInformado: '',
             cpfInquilino: '',
             dataNascimentoInquilino: '',
-            tipo: '',
+            tipos: [],
             dataOcorrencia: '',
             situacaoAtual: '',
             faixaValor: '',
@@ -112,7 +113,7 @@ function InserirPage() {
     const inserirMutation = useMutation({
         mutationFn: (values: InserirFormValues) => {
             const { declaracaoFundamento, declaracaoVeracidade, declaracaoCiencia, mensagem, ...input } = values
-            const mensagemEnviada = tipoPermiteMensagem(input.tipo) ? mensagem.trim() : ''
+            const mensagemEnviada = tiposPermitemMensagem(input.tipos) ? mensagem.trim() : ''
             return ocorrenciaService.inserir({
                 ...input,
                 ...(mensagemEnviada && { mensagem: mensagemEnviada })
@@ -130,9 +131,14 @@ function InserirPage() {
 
     const mostrarCarregando = useDelayedLoading(inserirMutation.isPending)
 
-    const tipoSelecionado = watch('tipo')
+    const tiposSelecionados = watch('tipos')
     const mensagem = watch('mensagem')
-    const mostrarMensagem = tipoPermiteMensagem(tipoSelecionado)
+    const mostrarMensagem = tiposPermitemMensagem(tiposSelecionados)
+
+    function alterarTipos(tipos: string[]) {
+        setValue('tipos', tipos, { shouldValidate: errors.tipos !== undefined })
+        if (!tiposPermitemMensagem(tipos)) setValue('mensagem', '')
+    }
 
     const declaracoesMarcadas = DECLARACOES.map((declaracao) => watch(declaracao.name))
     const todasDeclaracoesMarcadas = declaracoesMarcadas.every(Boolean)
@@ -211,32 +217,15 @@ function InserirPage() {
                         <p className="text-sm font-semibold text-foreground">Dados da ocorrência</p>
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
                             <div className="flex flex-col gap-1.5">
-                                <Controller
-                                    key={formKey}
-                                    name="tipo"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <Select
-                                            value={field.value}
-                                            onValueChange={(valor) => {
-                                                field.onChange(valor)
-                                                if (!tipoPermiteMensagem(valor)) setValue('mensagem', '')
-                                            }}
-                                        >
-                                            <SelectTrigger id="tipo">
-                                                <SelectValue placeholder="Tipo de ocorrência" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {TIPO_OCORRENCIA_OPTIONS.map((option) => (
-                                                    <SelectItem key={option.value} value={option.value}>
-                                                        {option.label}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    )}
+                                <MultiSelect
+                                    id="tipos"
+                                    options={TIPO_OCORRENCIA_OPTIONS}
+                                    value={tiposSelecionados}
+                                    onValueChange={alterarTipos}
+                                    placeholder="Tipos de ocorrência"
+                                    invalid={errors.tipos !== undefined}
                                 />
-                                {errors.tipo && <p className="text-xs text-destructive">{errors.tipo.message}</p>}
+                                {errors.tipos && <p className="text-xs text-destructive">{errors.tipos.message}</p>}
                             </div>
 
                             <div>

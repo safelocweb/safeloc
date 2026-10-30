@@ -21,7 +21,7 @@ export class OcorrenciaListarTodasUsecase {
         const where: Prisma.OcorrenciaWhereInput = {
             imobiliariaId: filtros.imobiliariaId,
             usuarioId: filtros.usuarioId,
-            tipo: filtros.tipo,
+            tipos: filtros.tipo ? { has: filtros.tipo } : undefined,
             status: filtros.status,
             cpfInquilino: filtros.cpf ? sanitizeCpf(filtros.cpf) : undefined,
             createdAt:
@@ -37,7 +37,7 @@ export class OcorrenciaListarTodasUsecase {
                     id: true,
                     cpfInquilino: true,
                     nomeInquilinoInformado: true,
-                    tipo: true,
+                    tipos: true,
                     dataOcorrencia: true,
                     situacaoAtual: true,
                     faixaValor: true,

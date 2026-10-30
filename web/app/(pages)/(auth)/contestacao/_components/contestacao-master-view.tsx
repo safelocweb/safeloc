@@ -15,7 +15,7 @@ import { imobiliariaService } from '@/app/services/imobiliaria.service'
 import { contestacaoService } from '@/app/services/contestacao.service'
 import { ROUTES } from '@/shared/enums/routes.enum'
 import { StatusContestacao } from '@/shared/constants/status-contestacao'
-import { TIPO_OCORRENCIA_LABEL } from '@/shared/constants/tipo-ocorrencia'
+import { formatarTiposOcorrencia } from '@/shared/constants/tipo-ocorrencia'
 import { AbrirContestacaoDialog } from './abrir-contestacao-dialog'
 import { ContestacaoDetalheDialog } from './contestacao-detalhe-dialog'
 import { ContestacaoStatusBadge } from './contestacao-status-badge'
@@ -167,7 +167,7 @@ export function ContestacaoMasterView({ contestacaoIdParaAbrir }: { contestacaoI
                             <ContestacaoStatusBadge status={contestacao.status} />
                         </div>
                         <p className="text-xs text-muted-foreground">
-                            {TIPO_OCORRENCIA_LABEL[contestacao.ocorrencia.tipo]} ·{' '}
+                            {formatarTiposOcorrencia(contestacao.ocorrencia.tipos)} ·{' '}
                             {contestacao.imobiliaria.nomeFantasia ?? contestacao.imobiliaria.razaoSocial}
                         </p>
                         <p className="line-clamp-2 text-sm text-muted-foreground">{contestacao.motivoConsumidor}</p>

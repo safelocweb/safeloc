@@ -11,8 +11,8 @@ export class OcorrenciaInserirUsecase {
 
     async execute(imobiliariaId: number, usuarioId: number, input: OcorrenciaCreateInput) {
         const mensagem = input.mensagem?.trim() || null
-        if (mensagem && !TIPOS_OCORRENCIA_COM_MENSAGEM.includes(input.tipo)) {
-            throw new BadRequestException('Este tipo de ocorrência não permite mensagem')
+        if (mensagem && !input.tipos.some((tipo) => TIPOS_OCORRENCIA_COM_MENSAGEM.includes(tipo))) {
+            throw new BadRequestException('Os tipos de ocorrência selecionados não permitem mensagem')
         }
 
         const ocorrencia = await prisma.ocorrencia.create({
@@ -20,7 +20,7 @@ export class OcorrenciaInserirUsecase {
                 cpfInquilino: sanitizeCpf(input.cpfInquilino),
                 nomeInquilinoInformado: input.nomeInquilinoInformado,
                 dataNascimentoInquilino: new Date(input.dataNascimentoInquilino),
-                tipo: input.tipo,
+                tipos: input.tipos,
                 dataOcorrencia: new Date(input.dataOcorrencia),
                 situacaoAtual: input.situacaoAtual,
                 faixaValor: input.faixaValor,

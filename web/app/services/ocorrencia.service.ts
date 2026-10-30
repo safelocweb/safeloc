@@ -11,7 +11,7 @@ export interface ConsultaResult {
 
 export interface OcorrenciaDetalhe {
     id: number
-    tipo: TipoOcorrencia
+    tipos: TipoOcorrencia[]
     dataOcorrencia: string
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
@@ -24,7 +24,7 @@ export interface OcorrenciaDetalhe {
 export interface OcorrenciaExcluivel {
     id: number
     nomeInquilinoInformado: string
-    tipo: TipoOcorrencia
+    tipos: TipoOcorrencia[]
     dataOcorrencia: string
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
@@ -37,7 +37,7 @@ export interface OcorrenciaCreateInput {
     nomeInquilinoInformado: string
     cpfInquilino: string
     dataNascimentoInquilino: string
-    tipo: TipoOcorrencia
+    tipos: TipoOcorrencia[]
     dataOcorrencia: string
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
@@ -49,7 +49,7 @@ export interface OcorrenciaAdmin {
     id: number
     cpfInquilino: string
     nomeInquilinoInformado: string
-    tipo: TipoOcorrencia
+    tipos: TipoOcorrencia[]
     dataOcorrencia: string
     situacaoAtual: SituacaoOcorrencia
     faixaValor: FaixaValorOcorrencia
