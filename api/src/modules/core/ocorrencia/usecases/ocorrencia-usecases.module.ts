@@ -5,6 +5,7 @@ import { OcorrenciaDetalharPorCpfUsecase } from './ocorrencia-detalhar-por-cpf.u
 import { OcorrenciaExcluirUsecase } from './ocorrencia-excluir.usecase'
 import { OcorrenciaInserirUsecase } from './ocorrencia-inserir.usecase'
 import { OcorrenciaListarExcluiveisUsecase } from './ocorrencia-listar-excluiveis.usecase'
+import { OcorrenciaListarHistoricoUsecase } from './ocorrencia-listar-historico.usecase'
 import { OcorrenciaListarTodasUsecase } from './ocorrencia-listar-todas.usecase'
 
 @Module({
@@ -14,6 +15,7 @@ import { OcorrenciaListarTodasUsecase } from './ocorrencia-listar-todas.usecase'
         OcorrenciaDetalharPorCpfUsecase,
         OcorrenciaInserirUsecase,
         OcorrenciaListarExcluiveisUsecase,
+        OcorrenciaListarHistoricoUsecase,
         OcorrenciaListarTodasUsecase,
         OcorrenciaExcluirUsecase
     ],
@@ -22,6 +24,7 @@ import { OcorrenciaListarTodasUsecase } from './ocorrencia-listar-todas.usecase'
         OcorrenciaDetalharPorCpfUsecase,
         OcorrenciaInserirUsecase,
         OcorrenciaListarExcluiveisUsecase,
+        OcorrenciaListarHistoricoUsecase,
         OcorrenciaListarTodasUsecase,
         OcorrenciaExcluirUsecase
     ]

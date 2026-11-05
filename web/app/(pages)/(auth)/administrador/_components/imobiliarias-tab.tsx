@@ -147,7 +147,7 @@ export function ImobiliariasTab() {
                 emptyMessage="Nenhuma imobiliária encontrada com essa busca."
                 headerActions={
                     <>
-                        <div className="relative w-full md:w-64">
+                        <div className="relative col-span-2 w-full md:w-64">
                             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                             <Input
                                 value={busca}
@@ -156,7 +156,7 @@ export function ImobiliariasTab() {
                                 className="pl-9"
                             />
                         </div>
-                        <Button onClick={() => setDialogCriarAberto(true)}>
+                        <Button className="col-span-2" onClick={() => setDialogCriarAberto(true)}>
                             <Plus className="h-4 w-4" />
                             Nova imobiliária
                         </Button>

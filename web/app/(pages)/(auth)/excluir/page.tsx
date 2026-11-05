@@ -52,7 +52,7 @@ function ExcluirPage() {
     }
 
     return (
-        <div className="flex min-h-full flex-col gap-6 md:h-full md:min-h-0 lg:grid lg:grid-cols-[360px_1fr]">
+        <div className="flex min-h-full flex-col gap-6 md:h-full md:min-h-0 lg:grid lg:grid-cols-[22rem_1fr]">
             <div className="lg:self-start">
                 <CpfSearchCard
                     icon={Trash2}

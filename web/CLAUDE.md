@@ -50,6 +50,7 @@ app/
         ├── consultar/          # CONSULTAR INFORMAÇÕES
         ├── inserir/            # INSERIR INFORMAÇÕES
         ├── excluir/            # EXCLUIR INFORMAÇÕES
+        ├── historico/          # histórico de ocorrências da própria imobiliária
         └── usuarios/           # gerenciar os até-2 usuários da imobiliária
 components/ui/    # subconjunto mínimo de componentes estilo shadcn (Button, Input, Card...)
 shared/
@@ -72,4 +73,5 @@ lib/                # cn() (tailwind-merge) e formatCpf()
 - Tailwind CSS **3.x**
 - App Router sem `src/` — arquivos na raiz do projeto
 - A ordem das 3 opções na tela principal (Consultar, Inserir, Excluir) é requisito do produto — não reordenar sem confirmar com o usuário
+- Tipografia: usar a escala do `tailwind.config.ts` (`text-3xs` a `text-2xl`); não usar tamanhos em px como `text-[11px]`, que não acompanham a escala fluida do desktop
 - Formulários sempre com `react-hook-form` + `zod` (`zodResolver`)

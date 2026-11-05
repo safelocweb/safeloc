@@ -100,7 +100,7 @@ export function TermoAceiteGate() {
                         </Button>
                     </div>
 
-                    <p className="text-center text-[11px] leading-relaxed text-muted-foreground">
+                    <p className="text-center text-2xs leading-relaxed text-muted-foreground">
                         O aceite deste termo será armazenado juntamente com a data, horário, IP e identificação do
                         usuário.
                     </p>

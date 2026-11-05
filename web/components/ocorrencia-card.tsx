@@ -71,13 +71,13 @@ export function OcorrenciaCard({
                     <span className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground sm:flex">
                         <Icon className="h-4 w-4" />
                     </span>
-                    <div className="flex min-w-0 flex-1 flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:pt-1">
+                    <div className="flex min-w-0 flex-1 flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-3 sm:pt-1">
                         <p className="flex min-w-0 items-center gap-2 font-semibold leading-snug">
-                            <span className="truncate">{TIPO_OCORRENCIA_LABEL[tipoPrincipal] ?? tipoPrincipal}</span>
+                            <span className="min-w-0 break-words">{TIPO_OCORRENCIA_LABEL[tipoPrincipal] ?? tipoPrincipal}</span>
                             {outrosTipos.length > 0 && (
                                 <span
                                     title={`Mais ${outrosTipos.length} ${outrosTipos.length === 1 ? 'tipo' : 'tipos'} de ocorrência`}
-                                    className="inline-flex h-5 shrink-0 items-center rounded-full bg-primary/10 px-2 text-[11px] font-bold text-primary"
+                                    className="inline-flex h-5 shrink-0 items-center rounded-full bg-primary/10 px-2 text-2xs font-bold text-primary"
                                 >
                                     +{outrosTipos.length}
                                 </span>
@@ -115,13 +115,13 @@ export function OcorrenciaCard({
 
             <div
                 className={cn(
-                    'flex shrink-0 items-center justify-between gap-4 border-t border-border py-3.5 pl-5 pr-4',
-                    'sm:w-52 sm:flex-col sm:items-start sm:justify-center sm:gap-3 sm:border-l sm:border-t-0 sm:py-4 sm:pl-5 sm:pr-4',
+                    'flex shrink-0 flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-border py-3.5 pl-5 pr-4',
+                    'sm:w-52 sm:flex-col xl:w-56 sm:flex-nowrap sm:items-start sm:justify-center sm:gap-3 sm:border-l sm:border-t-0 sm:py-4 sm:pl-5 sm:pr-4',
                     estiloRisco.softClass
                 )}
             >
                 <div className="min-w-0">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    <p className="text-3xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                         Valor envolvido
                     </p>
                     <p className={cn('text-sm font-bold leading-tight', estiloRisco.textClass)}>
@@ -168,7 +168,7 @@ function TiposOcorrenciaChips({ tipos }: { tipos: TipoOcorrencia[] }) {
                         {expandido ? (
                             <ChevronUp className="h-3.5 w-3.5 shrink-0" />
                         ) : (
-                            <span className="flex h-4 min-w-[1rem] items-center justify-center rounded bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground">
+                            <span className="flex h-4 min-w-[1rem] items-center justify-center rounded bg-primary px-1 text-3xs font-bold leading-none text-primary-foreground">
                                 +{ocultos}
                             </span>
                         )}

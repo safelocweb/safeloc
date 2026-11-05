@@ -67,6 +67,37 @@ export interface OcorrenciaAdminListResult {
     pageSize: number
 }
 
+export interface OcorrenciaHistorico {
+    id: number
+    cpfInquilino: string
+    nomeInquilinoInformado: string
+    tipos: TipoOcorrencia[]
+    dataOcorrencia: string
+    situacaoAtual: SituacaoOcorrencia
+    faixaValor: FaixaValorOcorrencia
+    gravidade: GravidadeOcorrencia
+    mensagem: string | null
+    status: 'ATIVA' | 'EXCLUIDA'
+    excluidoEm: string | null
+    createdAt: string
+    usuario: { id: number; nomeCompleto: string; login: string }
+}
+
+export interface OcorrenciaHistoricoListResult {
+    ocorrencias: OcorrenciaHistorico[]
+    total: number
+    page: number
+    pageSize: number
+}
+
+export interface OcorrenciaHistoricoFiltros {
+    tipo?: TipoOcorrencia
+    status?: 'ATIVA' | 'EXCLUIDA'
+    cpf?: string
+    page?: number
+    pageSize?: number
+}
+
 export interface OcorrenciaAdminFiltros {
     imobiliariaId?: number
     tipo?: TipoOcorrencia
@@ -100,6 +131,13 @@ export const ocorrenciaService = {
 
     async excluir(id: number): Promise<void> {
         await apiClient.delete(`/ocorrencias/${id}`)
+    },
+
+    async listarHistorico(filtros: OcorrenciaHistoricoFiltros): Promise<OcorrenciaHistoricoListResult> {
+        const { data } = await apiClient.get<OcorrenciaHistoricoListResult>('/ocorrencias/historico', {
+            params: filtros
+        })
+        return data
     },
 
     async listarTodasAdmin(filtros: OcorrenciaAdminFiltros): Promise<OcorrenciaAdminListResult> {

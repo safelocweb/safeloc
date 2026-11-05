@@ -95,7 +95,7 @@ export function OcorrenciasTab() {
                             placeholder="Buscar por CPF"
                         />
                     </div>
-                    <div className="w-full md:w-48">
+                    <div className="w-full md:w-52">
                         <SearchableSelect
                             value={filtroImobiliaria}
                             onValueChange={aplicarFiltro(setFiltroImobiliaria)}
@@ -155,7 +155,7 @@ export function OcorrenciasTab() {
                     esmaecido={ocorrencia.status === 'EXCLUIDA'}
                     badgesExtras={ocorrencia.status === 'EXCLUIDA' && <Badge variant="outline">Excluída</Badge>}
                 >
-                    <p className="text-sm font-medium">
+                    <p className="break-words text-sm font-medium">
                         {formatCpf(ocorrencia.cpfInquilino)} · {ocorrencia.nomeInquilinoInformado}
                     </p>
                     <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">

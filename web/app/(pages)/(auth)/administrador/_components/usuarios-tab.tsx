@@ -200,12 +200,12 @@ export function UsuariosTab() {
                         key={usuario.id}
                         className="flex flex-col gap-2 rounded-md border border-border p-3 text-sm sm:flex-row sm:items-center sm:justify-between"
                     >
-                        <div className="flex items-start gap-3">
+                        <div className="flex min-w-0 items-start gap-3">
                             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                                 <Users className="h-4 w-4" />
                             </span>
-                            <div>
-                                <div className="flex items-center gap-2 font-medium">
+                            <div className="min-w-0">
+                                <div className="flex flex-wrap items-center gap-2 font-medium">
                                     {usuario.nomeCompleto}
                                     <Badge variant={usuario.status === 'ATIVO' ? 'default' : 'outline'}>
                                         {usuario.status === 'ATIVO' ? 'Ativo' : 'Inativo'}
@@ -215,7 +215,7 @@ export function UsuariosTab() {
                                         <Badge variant="outline">{PAPEL_LABEL[usuario.papel]}</Badge>
                                     )}
                                 </div>
-                                <p className="text-muted-foreground">
+                                <p className="break-words text-muted-foreground">
                                     {usuario.login} · {usuario.email}
                                     {usuario.imobiliaria &&
                                         ` · ${usuario.imobiliaria.nomeFantasia ?? usuario.imobiliaria.razaoSocial}`}

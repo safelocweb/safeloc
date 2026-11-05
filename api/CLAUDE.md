@@ -71,6 +71,7 @@ prisma/
 Regra de negócio central (não é decisão de implementação, vem do produto):
 - **Consultar** (`GET /ocorrencias/consulta/:cpf`, `/detalhes`) é **cross-tenant**: qualquer imobiliária logada vê ocorrências ativas de qualquer outra imobiliária para aquele CPF — é o propósito colaborativo da base.
 - **Excluir** (`DELETE /ocorrencias/:id`, listagem em `/ocorrencias/excluiveis/:cpf`) é **escopado**: só a imobiliária que registrou a ocorrência pode vê-la nessa lista e excluí-la.
+- **Histórico** (`GET /ocorrencias/historico`) é **escopado**: a imobiliária vê só o que ela registrou, inclusive excluídas; o `imobiliariaId` vem sempre do JWT.
 - Exclusão é sempre **soft delete** (`status: EXCLUIDA`) — nunca apagar a linha do banco.
 - Toda ação sensível grava `AuditLog` via `AuditLogService.record(...)` (login, consulta por CPF, inserção, exclusão).
 

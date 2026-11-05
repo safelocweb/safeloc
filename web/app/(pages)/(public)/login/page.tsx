@@ -77,12 +77,12 @@ function LoginForm() {
                     <p className="text-2xl font-bold tracking-tight">
                         Safe<span className="text-primary">loc</span>
                     </p>
-                    <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                    <p className="text-2xs font-semibold uppercase tracking-widest text-muted-foreground">
                         Locação segura para imobiliárias
                     </p>
                 </div>
 
-                <div className="flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1.5 text-[11px] font-medium text-primary">
+                <div className="flex items-center gap-2 rounded-full border border-primary/15 bg-primary/5 px-3 py-1.5 text-2xs font-medium text-primary">
                     <ShieldCheck className="h-3.5 w-3.5" />
                     Acesso seguro para imobiliárias
                 </div>

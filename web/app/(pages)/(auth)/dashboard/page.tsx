@@ -118,7 +118,7 @@ function DashboardPage() {
                     <TrendingUp className="h-5 w-5" />
                 </span>
                 <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">Painel estratégico</p>
+                    <p className="text-2xs font-semibold uppercase tracking-[0.14em] text-primary">Painel estratégico</p>
                     <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Visão geral da sua operação</h1>
                     <p className="text-sm text-muted-foreground">
                         Visão geral dos registros e consultas da sua imobiliária
@@ -137,7 +137,7 @@ function DashboardPage() {
                     <CardTitle>Registros da sua imobiliária</CardTitle>
                     <CardDescription>Ocorrências inseridas nos últimos 6 meses</CardDescription>
                 </CardHeader>
-                <CardContent className="h-40 pb-4 pt-0 sm:h-44">
+                <CardContent className="h-40 pb-4 pt-0 sm:h-44 lg:h-40">
                     <ResponsiveContainer width="100%" height="100%">
                         <AreaChart
                             data={resumo.serieMensalImobiliaria}
@@ -149,7 +149,7 @@ function DashboardPage() {
                                 tickFormatter={formatarMes}
                                 tickLine={false}
                                 axisLine={false}
-                                fontSize={12}
+                                fontSize={13}
                                 stroke="hsl(var(--muted-foreground))"
                             />
                             <YAxis
@@ -157,7 +157,7 @@ function DashboardPage() {
                                 domain={[0, 'dataMax + 2']}
                                 tickLine={false}
                                 axisLine={false}
-                                fontSize={12}
+                                fontSize={13}
                                 stroke="hsl(var(--muted-foreground))"
                             />
                             <Tooltip
@@ -169,7 +169,7 @@ function DashboardPage() {
                                     backgroundColor: 'hsl(var(--popover))',
                                     border: '1px solid hsl(var(--border))',
                                     borderRadius: 8,
-                                    fontSize: 12
+                                    fontSize: 13
                                 }}
                             />
                             <Area
@@ -247,7 +247,7 @@ function DashboardPage() {
                                 </p>
                             </div>
                         ) : (
-                            <ResponsiveContainer width="100%" height="100%"><BarChart data={contestacaoChartData} layout="vertical" margin={{ left: 18 }}><XAxis type="number" allowDecimals={false} hide /><YAxis type="category" dataKey="name" width={94} tickLine={false} axisLine={false} fontSize={11} stroke="hsl(var(--muted-foreground))" /><Tooltip formatter={formatarValorTooltip('Contestações')} cursor={{ fill: 'hsl(var(--muted))' }} contentStyle={{ backgroundColor: 'hsl(var(--popover))', border: '1px solid hsl(var(--border))', borderRadius: 8 }} /><Bar dataKey="total" fill="var(--chart-blue)" radius={[0, 6, 6, 0]} /></BarChart></ResponsiveContainer>
+                            <ResponsiveContainer width="100%" height="100%"><BarChart data={contestacaoChartData} layout="vertical" margin={{ left: 18 }}><XAxis type="number" allowDecimals={false} hide /><YAxis type="category" dataKey="name" width={94} tickLine={false} axisLine={false} fontSize={12} stroke="hsl(var(--muted-foreground))" /><Tooltip formatter={formatarValorTooltip('Contestações')} cursor={{ fill: 'hsl(var(--muted))' }} contentStyle={{ backgroundColor: 'hsl(var(--popover))', border: '1px solid hsl(var(--border))', borderRadius: 8 }} /><Bar dataKey="total" fill="var(--chart-blue)" radius={[0, 6, 6, 0]} /></BarChart></ResponsiveContainer>
                         )}
                     </CardContent>
                 </Card>

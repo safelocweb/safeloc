@@ -12,8 +12,8 @@ export function RiscoLocacaoMedidor({ risco, className }: RiscoLocacaoMedidorPro
     const { label, textClass } = RISCO_LOCACAO[risco]
 
     return (
-        <div className={cn('flex flex-col items-end gap-1.5 sm:items-start', className)}>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+        <div className={cn('flex flex-col items-start gap-1.5', className)}>
+            <p className="text-3xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 Risco de locação
             </p>
             <div role="img" aria-label={`Risco de locação ${label.toLowerCase()}`}>
@@ -58,7 +58,7 @@ function MedidorHorizontal({ risco, label, textClass }: MedidorProps) {
                     </div>
                 ))}
             </div>
-            <span className={cn('-mt-0.5 text-[11px] font-bold uppercase leading-none tracking-wide', textClass)}>
+            <span className={cn('-mt-0.5 text-2xs font-bold uppercase leading-none tracking-wide', textClass)}>
                 {label}
             </span>
         </div>
@@ -81,7 +81,7 @@ function MedidorVertical({ risco, label, textClass }: MedidorProps) {
                         {nivel === risco && (
                             <>
                                 <ArrowLeft className="h-4 w-4 shrink-0 text-foreground" strokeWidth={2.5} />
-                                <span className={cn('text-[11px] font-bold uppercase tracking-wide', textClass)}>
+                                <span className={cn('text-2xs font-bold uppercase tracking-wide', textClass)}>
                                     {label}
                                 </span>
                             </>

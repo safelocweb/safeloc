@@ -146,7 +146,7 @@ function UsuariosPage() {
                 {usuarios?.map((usuario) => (
                     <div
                         key={usuario.id}
-                        className="flex flex-col gap-3 rounded-md border border-border p-3 text-sm sm:flex-row sm:items-center sm:justify-between"
+                        className="flex flex-col gap-3 rounded-md border border-border p-3 text-sm lg:flex-row lg:items-center lg:justify-between"
                     >
                         <div className="flex min-w-0 items-start gap-3">
                             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -160,12 +160,12 @@ function UsuariosPage() {
                                     </Badge>
                                     <Badge variant="outline">{PAPEL_LABEL[usuario.papel]}</Badge>
                                 </div>
-                                <p className="text-muted-foreground">
+                                <p className="break-words text-muted-foreground">
                                     {usuario.login} · {usuario.email}
                                 </p>
                             </div>
                         </div>
-                        <div className="flex shrink-0 items-center gap-2 pl-11 sm:pl-0">
+                        <div className="flex shrink-0 flex-wrap items-center gap-2 pl-11 max-[399px]:pl-0 lg:pl-0">
                             {papelMutation.isPending && papelMutation.variables?.id === usuario.id && (
                                 <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
                             )}
@@ -176,7 +176,7 @@ function UsuariosPage() {
                                     papelMutation.mutate({ id: usuario.id, papel: valor as 'ADMIN' | 'PADRAO' })
                                 }
                             >
-                                <SelectTrigger className="h-8 w-36" aria-label="Papel do usuário">
+                                <SelectTrigger className="h-8 w-40" aria-label="Papel do usuário">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>

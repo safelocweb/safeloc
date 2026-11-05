@@ -50,7 +50,7 @@ export default function ConsultarPage() {
     }
 
     return (
-        <div className="flex min-h-full flex-col gap-6 md:h-full md:min-h-0 lg:grid lg:grid-cols-[360px_1fr]">
+        <div className="flex min-h-full flex-col gap-6 md:h-full md:min-h-0 lg:grid lg:grid-cols-[22rem_1fr]">
             <div className="flex flex-col gap-4 lg:min-h-0">
                 <CpfSearchCard
                     icon={Search}
@@ -116,8 +116,8 @@ export default function ConsultarPage() {
                                                 mensagem={ocorrencia.mensagem}
                                             >
                                                 <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                                                    <Building2 className="h-3.5 w-3.5" />
-                                                    {ocorrencia.imobiliaria.nomeFantasia ?? ocorrencia.imobiliaria.razaoSocial}
+                                                    <Building2 className="h-3.5 w-3.5 shrink-0" />
+                                                    <span className="min-w-0 break-words">{ocorrencia.imobiliaria.nomeFantasia ?? ocorrencia.imobiliaria.razaoSocial}</span>
                                                 </p>
                                             </OcorrenciaCard>
                                         ))}
@@ -152,7 +152,7 @@ function ObservacaoConsulta({ className }: { className?: string }) {
             )}
         >
             <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-            <p className="text-[11px] leading-relaxed text-muted-foreground">
+            <p className="text-2xs leading-relaxed text-muted-foreground">
                 As ocorrências exibidas foram registradas por imobiliárias participantes da plataforma. A
                 responsabilidade pela veracidade das informações é exclusivamente da imobiliária registrante. A Safeloc
                 atua apenas como provedora tecnológica e registra todas as operações realizadas no sistema.

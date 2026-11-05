@@ -100,7 +100,7 @@ export function ContestacaoMasterView({ contestacaoIdParaAbrir }: { contestacaoI
                 }}
                 headerActions={
                     <>
-                        <div className="w-full md:w-44">
+                        <div className="col-span-2 w-full md:w-44">
                             <CpfInput
                                 value={filtroCpf}
                                 onChange={(event) => {
@@ -116,7 +116,7 @@ export function ContestacaoMasterView({ contestacaoIdParaAbrir }: { contestacaoI
                             onValueChange={aplicarFiltro(setFiltroImobiliaria)}
                             disabled={mostrarCarregando}
                         >
-                            <SelectTrigger className="w-full md:w-48">
+                            <SelectTrigger className="w-full md:w-52">
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -145,7 +145,7 @@ export function ContestacaoMasterView({ contestacaoIdParaAbrir }: { contestacaoI
                                 <SelectItem value="IMPROCEDENTE">Improcedente</SelectItem>
                             </SelectContent>
                         </Select>
-                        <Button onClick={() => setDialogAbrirAberto(true)}>
+                        <Button className="col-span-2" onClick={() => setDialogAbrirAberto(true)}>
                             <Plus className="h-4 w-4" />
                             Abrir contestação
                         </Button>

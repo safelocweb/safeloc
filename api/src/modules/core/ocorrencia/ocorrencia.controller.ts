@@ -17,11 +17,13 @@ import { MasterGuard } from '../../../infra/system/security/guards/master.guard'
 import { PapelAdminGuard } from '../../../infra/system/security/guards/papel-admin.guard'
 import { UsuarioFromJwtDto } from '../usuario/types/usuario-from-jwt.input'
 import { OcorrenciaCreateInput } from './types/ocorrencia-create.input'
+import { OcorrenciaHistoricoQuery } from './types/ocorrencia-historico.query'
 import { OcorrenciaConsultarPorCpfUsecase } from './usecases/ocorrencia-consultar-por-cpf.usecase'
 import { OcorrenciaDetalharPorCpfUsecase } from './usecases/ocorrencia-detalhar-por-cpf.usecase'
 import { OcorrenciaExcluirUsecase } from './usecases/ocorrencia-excluir.usecase'
 import { OcorrenciaInserirUsecase } from './usecases/ocorrencia-inserir.usecase'
 import { OcorrenciaListarExcluiveisUsecase } from './usecases/ocorrencia-listar-excluiveis.usecase'
+import { OcorrenciaListarHistoricoUsecase } from './usecases/ocorrencia-listar-historico.usecase'
 import { OcorrenciaListarTodasUsecase } from './usecases/ocorrencia-listar-todas.usecase'
 
 @ApiTags('ocorrencia')
@@ -34,6 +36,7 @@ export class OcorrenciaController {
         private readonly ocorrenciaDetalharPorCpfUsecase: OcorrenciaDetalharPorCpfUsecase,
         private readonly ocorrenciaInserirUsecase: OcorrenciaInserirUsecase,
         private readonly ocorrenciaListarExcluiveisUsecase: OcorrenciaListarExcluiveisUsecase,
+        private readonly ocorrenciaListarHistoricoUsecase: OcorrenciaListarHistoricoUsecase,
         private readonly ocorrenciaListarTodasUsecase: OcorrenciaListarTodasUsecase,
         private readonly ocorrenciaExcluirUsecase: OcorrenciaExcluirUsecase
     ) {}
@@ -62,6 +65,12 @@ export class OcorrenciaController {
             page: page ? Number(page) : 1,
             pageSize: pageSize ? Number(pageSize) : 50
         })
+    }
+
+    @UseGuards(PapelAdminGuard)
+    @Get('historico')
+    async listarHistorico(@CurrentUser() usuario: UsuarioFromJwtDto, @Query() filtros: OcorrenciaHistoricoQuery) {
+        return this.ocorrenciaListarHistoricoUsecase.execute(usuario.imobiliariaId, usuario.id, filtros)
     }
 
     @Get('consulta/:cpf')

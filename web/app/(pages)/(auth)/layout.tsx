@@ -10,6 +10,7 @@ import {
     Search,
     PlusCircle,
     Trash2,
+    History,
     Users,
     MessageSquareWarning,
     ShieldCheck,
@@ -32,6 +33,7 @@ const NAV_ITEMS = [
     { href: ROUTES.CONSULTAR, label: 'Consultar Ocorrências', icon: Search },
     { href: ROUTES.INSERIR, label: 'Inserir Ocorrências', icon: PlusCircle },
     { href: ROUTES.EXCLUIR, label: 'Excluir Ocorrências', icon: Trash2 },
+    { href: ROUTES.HISTORICO, label: 'Histórico de Ocorrências', icon: History },
     { href: ROUTES.USUARIOS, label: 'Usuários', icon: Users },
     { href: ROUTES.CONTESTACAO, label: 'Contestação', icon: MessageSquareWarning }
 ]
@@ -92,23 +94,23 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                     <button
                         onClick={() => setMenuAberto(true)}
                         aria-label="Abrir menu"
-                        className="ml-4 inline-flex shrink-0 items-center justify-center self-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground md:hidden"
+                        className="ml-4 inline-flex shrink-0 items-center justify-center self-center rounded-md p-2 max-[359px]:ml-1 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground md:hidden"
                     >
                         <Menu className="h-5 w-5" />
                     </button>
                 )}
 
-                <div className="flex min-w-0 items-center gap-3 px-4 md:w-64 md:shrink-0 md:px-5">
+                <div className="flex min-w-0 items-center gap-3 px-4 max-[359px]:gap-2 max-[359px]:px-1 md:w-[17rem] md:shrink-0 md:px-5">
                     <Image src="/logo.png" alt="Safeloc" width={40} height={40} className="h-9 w-9 rounded-lg md:h-10 md:w-10" />
                     <div className="min-w-0 leading-tight">
                         <p className="truncate text-lg font-bold tracking-tight">
                             Safe<span className="text-primary">Loc</span>
                         </p>
-                        <p className="hidden truncate text-[11px] text-muted-foreground sm:block">Consulta de Inquilinos</p>
+                        <p className="hidden truncate text-2xs text-muted-foreground sm:block">Consulta de Inquilinos</p>
                     </div>
                 </div>
 
-                <div className="flex min-w-0 flex-1 items-center gap-2 px-4 sm:px-6 lg:px-8">
+                <div className="flex min-w-0 flex-1 items-center gap-2 px-4 max-[359px]:pl-0 max-[359px]:pr-1 sm:px-6 lg:px-8">
                     <div className="hidden flex-1 md:block">
                         <p className="truncate text-base text-muted-foreground">
                             {getSaudacao()}, <span className="font-semibold text-foreground">{usuario.nomeCompleto}</span>
@@ -132,7 +134,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
             <div className="flex min-h-0 flex-1">
                 {!usuarioPadrao && (
-                    <aside className="relative hidden shrink-0 flex-col overflow-hidden bg-sidebar text-sidebar-foreground md:flex md:w-64">
+                    <aside className="relative hidden shrink-0 flex-col overflow-hidden bg-sidebar text-sidebar-foreground md:flex md:w-[17rem]">
                         <ShieldCheck
                             aria-hidden
                             strokeWidth={1.25}
@@ -140,7 +142,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                         />
 
                         <nav className="relative flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-3 py-5">
-                            <p className="px-3 pb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-sidebar-muted">
+                            <p className="px-3 pb-2 text-2xs font-bold uppercase tracking-[0.16em] text-sidebar-muted">
                                 Navegação
                             </p>
                             {navItems.map((item) => {
@@ -153,7 +155,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                                         className={cn(
                                             'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all',
                                             ativo
-                                                ? 'bg-primary font-semibold text-primary-foreground shadow-lg shadow-primary/25'
+                                                ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
                                                 : 'text-sidebar-foreground/85 hover:bg-sidebar-accent hover:text-sidebar-foreground'
                                         )}
                                     >
